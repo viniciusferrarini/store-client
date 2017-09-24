@@ -1,18 +1,19 @@
 package br.com.slotshop.storeclient.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@Controller("/navbar")
+@RestController
+@RequestMapping("/navbar")
 public class NavbarController {
 
     @GetMapping
-    public @ResponseBody String getNav(){
+    public @ResponseBody String getNavbar(){
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:7990/subCategory";
-        return restTemplate.getForObject(url, String.class);
+        return restTemplate.getForObject("http://localhost:7990/subCategory/navbar", String.class);
     }
 
 }

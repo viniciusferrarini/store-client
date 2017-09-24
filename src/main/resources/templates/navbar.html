@@ -1,61 +1,14 @@
-<div class="navbar-vertical">
-    <h1>${mensagem}</h1>
+<div class="navbar-vertical" id="navbar">
     <ul class="nav nav-stacked">
         <li class="header">
-            <h6 class="text-uppercase">Categories <i class="fa fa-navicon pull-right"></i></h6>
+            <h6 class="text-uppercase">Categorias <i class="fa fa-navicon pull-right"></i></h6>
         </li>
-        <li>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Mens <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0);">Shirts</a></li>
-                <li><a href="javascript:void(0);">Coats & Jackets</a></li>
-                <li><a href="javascript:void(0);">Underwear</a></li>
-                <li><a href="javascript:void(0);">Sunglasses</a></li>
-                <li><a href="javascript:void(0);">Socks</a></li>
-                <li><a href="javascript:void(0);">Belts</a></li>
-            </ul>
-        </li>
-        <li>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Womens <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0);">Dresses</a></li>
-                <li><a href="javascript:void(0);">T-shirts</a></li>
-                <li><a href="javascript:void(0);">Skirts</a></li>
-                <li><a href="javascript:void(0);">Jeans</a></li>
-                <li><a href="javascript:void(0);">Pullover</a></li>
-            </ul>
-        </li>
-        <li><a href="javascript:void(0);">Kids</a></li>
-        <li><a href="javascript:void(0);">Fashion</a></li>
-        <li>
+        <li v-for="nav in navList">
             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                SportWear <i class="fa fa-angle-right pull-right"></i>
+                {{nav.category.name}}<i class="fa fa-angle-right pull-right"></i>
             </a>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0);">Shoes</a></li>
-                <li><a href="javascript:void(0);">Bags</a></li>
-                <li><a href="javascript:void(0);">Pants</a></li>
-                <li><a href="javascript:void(0);">Swimwear</a></li>
-                <li><a href="javascript:void(0);">Bicycles</a></li>
-            </ul>
-        </li>
-        <li><a href="javascript:void(0);">Bags</a></li>
-        <li><a href="javascript:void(0);">Shoes</a></li>
-        <li><a href="javascript:void(0);">HouseHolds</a></li>
-        <li>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                Technology <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0);">Television</a></li>
-                <li><a href="javascript:void(0);">Camera</a></li>
-                <li><a href="javascript:void(0);">Speakers</a></li>
-                <li><a href="javascript:void(0);">Mobile</a></li>
-                <li><a href="javascript:void(0);">PC</a></li>
+            <ul v-if="nav.subCategory.length > 0" class="dropdown-menu">
+                <li v-for="sub in nav.subCategory"><a href="javascript:void(0);">{{sub.name}}</a></li>
             </ul>
         </li>
     </ul>
