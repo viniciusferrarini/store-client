@@ -4,8 +4,12 @@ import freemarker.template.TemplateException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactory;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.resource.ContentVersionStrategy;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
@@ -32,6 +36,23 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         FreeMarkerConfigurer result = new FreeMarkerConfigurer();
         result.setConfiguration(factory.createConfiguration());
         return result;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        VersionResourceResolver versionResourceResolver = new VersionResourceResolver()
+                .addVersionStrategy(new ContentVersionStrategy(), "/**");
+
+        registry.addResourceHandler("/resource/**")
+                .addResourceLocations("classpath:/static/")
+                .setCachePeriod(60 * 60 * 24 * 365)
+                .resourceChain(true)
+                .addResolver(versionResourceResolver);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }

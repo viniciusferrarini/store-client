@@ -1,5 +1,5 @@
-var product = new Vue({
-    el: '#product',
+var cart = new Vue({
+    el: '#cart',
     data: {
         amount: 1,
         product: {}
@@ -7,7 +7,7 @@ var product = new Vue({
     methods: {
         getProduct: function () {
             var self = this;
-            util.httpGet("/product/" + productId).then(function (data) {
+            util.httpGet("/1").then(function (data) {
                 self.product = data;
             });
         },
@@ -18,7 +18,7 @@ var product = new Vue({
 
         getClass: function(key) {
             return key === 0 ? 'item active' : 'item';
-        }
+        },
     },
     mounted: function () {
         this.getProduct();

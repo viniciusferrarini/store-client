@@ -7,7 +7,7 @@ new Vue({
         init: function () {
             var self = this;
             util.httpGet("/navbar").then(function (data) {
-                self.navList = JSON.parse(data);
+                self.navList = data;
             });
         }
     },

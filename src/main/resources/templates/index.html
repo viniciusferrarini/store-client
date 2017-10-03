@@ -58,7 +58,7 @@
                             <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
                         </div>
                         <figure class="layer">
-                            <a href="javascript:void(0);">
+                            <a :href="'/product/' + product.id + '/' + product.name">
                                 <img :src="getProductPicture(product)" alt="">
                             </a>
                         </figure>
@@ -67,10 +67,10 @@
                         </div>
                     </div>
                     <div class="caption">
-                        <h6 class="regular"><a href="shop-single-product-v1.html">{{product.name}}</a></h6>
+                        <h6 class="regular"><a :href="'/product/' + product.id + '/' + product.name">{{product.name}}</a></h6>
                         <div class="price">
                             <small class="amount off"></small>
-                            <span class="amount text-primary">{{product.amount}}</span>
+                            <a :href="'/product/' + product.id + '/' + product.name"><span class="amount text-primary">{{product.valueFormatted}}</span></a>
                         </div>
                         <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
                     </div><!-- end caption -->

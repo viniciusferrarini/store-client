@@ -52,7 +52,7 @@
                     <div class="header-item mr-5">
                         <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Carrinho">
                             <i class="fa fa-shopping-basket"></i>
-                            <sub>32</sub>
+                            <sub>{{cart.amount}}</sub>
                         </a>
                     </div>
                 </div><!-- end col -->
@@ -87,9 +87,14 @@
                             <span class="hidden-sm">Categorias</span><i class="fa fa-bars ml-5"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-submenu" v-for="nav in navList"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">{{nav.category.name}}</a>
+                            <li class="dropdown-submenu" v-for="nav in navList">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{nav.category.name}}
+                                </a>
                                 <ul class="dropdown-menu" v-if="nav.subCategory.length > 0">
-                                    <li v-for="sub in nav.subCategory"><a href="category.html">{{sub.name}}</a></li>
+                                    <li v-for="sub in nav.subCategory">
+                                        <a href="category.html">{{sub.name}}</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul><!-- end ul dropdown-menu -->

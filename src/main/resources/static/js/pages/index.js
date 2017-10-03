@@ -7,8 +7,7 @@ new Vue({
         getProduct: function () {
             var self = this;
             util.httpGet("/findFirst10").then(function (data) {
-                var page = JSON.parse(data);
-                self.productList = page.content;
+                self.productList = data.content;
             });
         },
 
