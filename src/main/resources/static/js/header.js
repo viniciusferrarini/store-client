@@ -3,8 +3,7 @@ var header = new Vue({
     data: {
         navList: [],
         cart: {
-            amount: 0,
-            products: []
+          amount: 0
         }
     },
     methods: {
@@ -17,32 +16,30 @@ var header = new Vue({
         },
 
         addProduct: function (product, amount) {
-            var cart = this.cart;
-            cart.amount += amount;
-            var productIndex = cart.products.indexOf(product);
-            if (productIndex !== -1){
-                cart.products[productIndex].quantity += amount;
-            }else{
-                product.quantity = amount;
-                cart.products.push(product);
-            }
-            this.saveCar()
+
+            var cartProduct = {
+                product: product,
+                amount: amount
+            };
+
+            util.httpPostJson("/cart?id=" + this.getCartId(), cartProduct).then(function (data) {
+                console.log(data);
+            });
         },
 
-        getCar: function () {
-            if(localStorage.getItem("cartStorage") !== null){
-                this.cart = JSON.parse(localStorage.getItem("cartStorage"));
+        getCartId: function () {
+            if(localStorage.getItem("cartId") !== null){
+                return localStorage.getItem("cartId");
             }
+            return null;
         },
 
-        saveCar: function () {
-            localStorage.setItem("cartStorage", JSON.stringify(this.cart));
+        saveCart: function () {
+            localStorage.setItem("cartId", this.cart);
         },
 
-        clearCar: function () {
-            if(localStorage.getItem("cartStorage") !== null){
-                localStorage.removeItem("cartStorage");
-            }
+        clearCart: function () {
+
         }
 
     },

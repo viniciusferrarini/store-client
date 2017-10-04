@@ -1,32 +1,30 @@
 package br.com.slotshop.storeclient.controller;
 
+import br.com.slotshop.storeclient.model.Cart;
+import br.com.slotshop.storeclient.model.CartProduct;
+import br.com.slotshop.storeclient.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("cart")
+@RequestMapping("/cart")
 public class CartController {
 
-    @Autowired private RestTemplate restTemplate;
-
-    @Value("${server.url}")
-    private String server;
+    @Autowired private CartService cartService;
 
     @GetMapping
     public ModelAndView get(){
         return new ModelAndView("/cart");
     }
 
-    @GetMapping("/{id}")
-    public @ResponseBody String getProduct(@PathVariable("id") Long id){
-        return restTemplate.getForObject(server + "/product/" + id, String.class);
+    @PostMapping
+    public @ResponseBody Cart addToCart(@RequestBody CartProduct cartProduct, @RequestParam("id") String id){
+        if(id != null) {
+            return cartService.newCart(cartProduct);
+        }
+        return cartService.addToCart(cartProduct, id);
     }
 
 }
