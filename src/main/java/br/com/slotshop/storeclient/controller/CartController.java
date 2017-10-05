@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("cart")
 public class CartController {
 
     @Autowired private CartService cartService;
@@ -19,12 +19,22 @@ public class CartController {
         return new ModelAndView("/cart");
     }
 
-    @PostMapping
-    public @ResponseBody Cart addToCart(@RequestBody CartProduct cartProduct, @RequestParam("id") String id){
-        if(id != null) {
-            return cartService.newCart(cartProduct);
+    @GetMapping("/token/{token}")
+    public @ResponseBody Cart findByToken(@PathVariable("token") String token){
+        return cartService.findByToken(token);
+    }
+
+    @PostMapping("/token")
+    public @ResponseBody Cart addToCart(@RequestBody CartProduct cartProduct, @RequestParam(value = "token", required = false) String token) {
+        if(!token.isEmpty() && token.length() == 25) {
+            return cartService.addToCart(cartProduct, token);
         }
-        return cartService.addToCart(cartProduct, id);
+        return null;
+    }
+
+    @PostMapping
+    public @ResponseBody Cart newCart(@RequestBody CartProduct cartProduct){
+        return cartService.newCart(cartProduct);
     }
 
 }

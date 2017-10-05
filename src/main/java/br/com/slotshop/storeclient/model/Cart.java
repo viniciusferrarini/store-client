@@ -1,33 +1,46 @@
 package br.com.slotshop.storeclient.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Document(collection = "Cart")
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column
     private Double subTotalCart;
 
+    @Column
     private Double totalCart;
 
+    @Column
     private Integer totalAmount;
 
-    @DBRef
+    @Column
+    @NotNull
+    private String token;
+
+    @JsonManagedReference
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<CartProduct> cartProducts;
 
 }

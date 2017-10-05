@@ -1,45 +1,36 @@
 package br.com.slotshop.storeclient.service.impl;
 
+import br.com.slotshop.server.service.imp.CrudServiceImpl;
 import br.com.slotshop.storeclient.model.Cart;
 import br.com.slotshop.storeclient.model.CartProduct;
 import br.com.slotshop.storeclient.repository.CartRepository;
-import br.com.slotshop.storeclient.service.CartProductService;
 import br.com.slotshop.storeclient.service.CartService;
+import br.com.slotshop.storeclient.util.RandomKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 
 @Service
 @Transactional
-public class CartServiceImpl implements CartService {
+public class CartServiceImpl extends CrudServiceImpl<Cart, Long> implements CartService {
 
     @Autowired private CartRepository cartRepository;
 
-    @Autowired private CartProductService cartProductService;
-
     @Override
-    public Cart save(Cart cart) {
-        return cartRepository.save(cart);
+    protected JpaRepository<Cart, Long> getRepository() {
+        return cartRepository;
     }
 
     @Override
-    public Cart findOne(String id) {
-        return cartRepository.findOne(id);
-    }
-
-    @Override
-    public void delete(String id) {
-        cartRepository.delete(id);
-    }
-
-    @Override
-    public Cart addToCart(CartProduct cartProduct, String id) {
-        Cart cart = cartRepository.findOne(id);
+    public Cart addToCart(CartProduct cartProduct, String token) {
+        Cart cart = cartRepository.findByToken(token);
         for (CartProduct product : cart.getCartProducts()) {
-            if (Objects.equals(cartProduct.getProduct(), product.getProduct())){
+            if (cartProduct.getProduct().getId().equals(product.getProduct().getId())){
                 product.setAmount(product.getAmount() + cartProduct.getAmount());
             }
         }
@@ -50,12 +41,20 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart newCart(CartProduct cartProduct) {
-        return cartRepository.insert(Cart.builder()
-                .totalAmount(cartProduct.getAmount())
-                .subTotalCart(cartProduct.getTotalValue())
-                .totalCart(cartProduct.getTotalValue())
-                .cartProducts(Collections.singletonList(cartProductService.save(cartProduct)))
-                .build());
+
+        Cart cart = new Cart();
+        cart.setToken(RandomKeyUtil.randomString(25));
+        cart.setTotalAmount(cartProduct.getAmount());
+        cart.setSubTotalCart(cartProduct.getTotalValue());
+        cart.setTotalCart(cartProduct.getTotalValue());
+        cartProduct.setCart(cart);
+        cart.setCartProducts(Arrays.asList(cartProduct));
+        return cartRepository.save(cart);
+
     }
 
+    @Override
+    public Cart findByToken(String token) {
+        return cartRepository.findByToken(token);
+    }
 }

@@ -1,32 +1,43 @@
 package br.com.slotshop.storeclient.model;
 
 import br.com.slotshop.server.model.Product;
+import br.com.slotshop.server.model.SubCategory;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+
+@Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Document(collection = "CartProduct")
 public class CartProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column
     private Integer amount;
 
+    @Column
     private Double total;
 
-    @JsonBackReference
+    @JoinColumn(name = "productId", referencedColumnName = "id")
+    @ManyToOne
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "cart", referencedColumnName = "id")
+    @JsonBackReference
+    private Cart cart;
 
     public Double getTotalValue(){
         return this.product.getValue() * amount;

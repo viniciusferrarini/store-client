@@ -3,10 +3,17 @@ var header = new Vue({
     data: {
         navList: [],
         cart: {
-          amount: 0
+          totalAmount: 0
         }
     },
     methods: {
+
+        getCart: function () {
+            var self = this;
+            util.httpGet("/cart/token/" + this.getCartToken()).then(function (data) {
+                self.cart = data;
+            });
+        },
 
         getNavbar: function () {
             var self = this;
@@ -22,20 +29,36 @@ var header = new Vue({
                 amount: amount
             };
 
-            util.httpPostJson("/cart?id=" + this.getCartId(), cartProduct).then(function (data) {
-                console.log(data);
-            });
-        },
-
-        getCartId: function () {
-            if(localStorage.getItem("cartId") !== null){
-                return localStorage.getItem("cartId");
+            var url = "/cart";
+            if (this.checkCartToken()) {
+                url += "/token?token=" + this.getCartToken();
             }
-            return null;
+
+            var self = this;
+            util.httpPostJson(url, cartProduct).then(function (data) {
+                if (!self.checkCartToken()) {
+                    self.saveCartToken(data.token);
+                }
+                setTimeout(function () {
+                    location.pathname = "/cart";
+                }, 300);
+            });
+
         },
 
-        saveCart: function () {
-            localStorage.setItem("cartId", this.cart);
+        getCartToken: function () {
+            if(localStorage.getItem("cartToken") !== null){
+                return localStorage.getItem("cartToken");
+            }
+            return "";
+        },
+
+        checkCartToken: function () {
+            return localStorage.getItem("cartToken") !== null;
+        },
+
+        saveCartToken: function (token) {
+            localStorage.setItem("cartToken", token);
         },
 
         clearCart: function () {
@@ -45,6 +68,8 @@ var header = new Vue({
     },
     mounted: function () {
         this.getNavbar();
-        this.getCar();
+        if (this.checkCartToken()){
+            this.getCart();
+        }
     }
 });
