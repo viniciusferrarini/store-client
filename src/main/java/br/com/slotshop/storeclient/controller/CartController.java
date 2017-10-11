@@ -4,12 +4,16 @@ import br.com.slotshop.storeclient.model.Cart;
 import br.com.slotshop.storeclient.model.CartProduct;
 import br.com.slotshop.storeclient.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("cart")
+@Scope("session")
 public class CartController {
 
     @Autowired private CartService cartService;
@@ -19,22 +23,24 @@ public class CartController {
         return new ModelAndView("/cart");
     }
 
-    @GetMapping("/token/{token}")
-    public @ResponseBody Cart findByToken(@PathVariable("token") String token){
-        return cartService.findByToken(token);
-    }
-
-    @PostMapping("/token")
-    public @ResponseBody Cart addToCart(@RequestBody CartProduct cartProduct, @RequestParam(value = "token", required = false) String token) {
-        if(!token.isEmpty() && token.length() == 25) {
-            return cartService.addToCart(cartProduct, token);
-        }
-        return null;
-    }
-
     @PostMapping
-    public @ResponseBody Cart newCart(@RequestBody CartProduct cartProduct){
-        return cartService.newCart(cartProduct);
+    public @ResponseBody Cart addToCart(@RequestBody CartProduct cartProduct, HttpSession session) {
+        return cartService.addToCart(cartProduct, session);
+    }
+
+    @GetMapping("/amountTotalCart")
+    public @ResponseBody Integer amountTotalCart(HttpSession session){
+        return cartService.getAmountTotalCart(session);
+    }
+
+    @GetMapping("/getCart")
+    public @ResponseBody Cart getCart(HttpSession session){
+        return cartService.getCart(session);
+    }
+
+    @PostMapping("/removeToCart")
+    public @ResponseBody Cart removeToCart(@RequestBody CartProduct cartProduct, HttpSession session){
+        return cartService.removeToCart(cartProduct, session);
     }
 
 }

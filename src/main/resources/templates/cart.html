@@ -7,213 +7,121 @@
 <body>
 <#include "/header.html" />
 <div id="cart">
+    <!-- page -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Meu Carrinho</li>
+                    </ul><!-- end breadcrumb -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumbs -->
+
     <section class="section white-backgorund">
         <div class="container">
             <div class="row">
-                <!-- start sidebar -->
-                <div class="col-sm-3">
-                    <div class="widget">
-                        <h6 class="subtitle">Account Navigation</h6>
-
-                        <ul class="list list-unstyled">
-                            <li>
-                                <a href="my-account.html">My Account</a>
-                            </li>
-                            <li class="active">
-                                <a href="cart.html">My Cart <span class="text-primary">(3)</span></a>
-                            </li>
-                            <li>
-                                <a href="order-list.html">My Order</a>
-                            </li>
-                            <li>
-                                <a href="wishlist.html">Wishlist <span class="text-primary">(5)</span></a>
-                            </li>
-                            <li>
-                                <a href="user-information.html">Settings</a>
-                            </li>
-                        </ul>
-                    </div><!-- end widget -->
-
-                    <div class="widget">
-                        <h6 class="subtitle">New Collection</h6>
-                        <figure>
-                            <a href="javascript:void(0);">
-                                <img src="img/products/men_06.jpg" alt="collection">
-                            </a>
-                        </figure>
-                    </div><!-- end widget -->
-
-                    <div class="widget">
-                        <h6 class="subtitle">Featured</h6>
-
-                        <ul class="items">
-                            <li>
-                                <a href="shop-single-product-v1.html" class="product-image">
-                                    <img src="img/products/men_01.jpg" alt="Sample Product ">
-                                </a>
-                                <div class="product-details">
-                                    <p class="product-name">
-                                        <a href="shop-single-product-v1.html">Product name</a>
-                                    </p>
-                                    <span class="price text-primary">$19.99</span>
-                                    <div class="rate text-warning">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                            </li><!-- end item -->
-                            <li>
-                                <a href="shop-single-product-v1.html" class="product-image">
-                                    <img src="img/products/women_02.jpg" alt="Sample Product ">
-                                </a>
-                                <div class="product-details">
-                                    <p class="product-name">
-                                        <a href="shop-single-product-v1.html">Product name</a>
-                                    </p>
-                                    <span class="price text-primary">$19.99</span>
-                                    <div class="rate text-warning">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                            </li><!-- end item -->
-                        </ul>
-
-                        <hr class="spacer-10 no-border">
-                        <a href="shop-sidebar-left.html" class="btn btn-default btn-block semi-circle btn-md">All Products</a>
-                    </div><!-- end widget -->
-                </div><!-- end col -->
                 <!-- end sidebar -->
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-12 text-left">
-                            <h2 class="title">My Cart</h2>
+                            <h2 class="title">Meu Carrinho</h2>
                         </div><!-- end col -->
                     </div><!-- end row -->
-
-                    <hr class="spacer-5"><hr class="spacer-20 no-border">
-
+                    <hr class="spacer-20">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="checkList(cart.cartProducts)">
                                 <table class="table table-striped">
                                     <thead>
-                                    <tr>
-                                        <th colspan="2">Products</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th colspan="2">Total</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="col-md-1">Produto</th>
+                                            <th></th>
+                                            <th class="col-md-2">Valor</th>
+                                            <th class="col-md-2 text-center">Quantidade</th>
+                                            <th class="text-right">Total</th>
+                                            <th class="text-right col-md-2">Remover</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <a href="shop-single-product-v1.html">
-                                                <img width="60px" src="img/products/men_06.jpg" alt="product">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <h6 class="regular"><a href="shop-single-product-v1.html">Lorem Ipsum</a></h6>
-                                            <p>Sed aliquam tincidunt tempus</p>
-                                        </td>
-                                        <td>
-                                            <span>$59.99</span>
-                                        </td>
-                                        <td>
-                                            <select class="form-control" name="select">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <span class="text-primary">$59.99</span>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="close">×</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="shop-single-product-v1.html">
-                                                <img width="60px" src="img/products/shoes_01.jpg" alt="product">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <h6 class="regular"><a href="shop-single-product-v1.html">Lorem Ipsum</a></h6>
-                                            <p>Sed aliquam tincidunt tempus</p>
-                                        </td>
-                                        <td>
-                                            <span>$39.99</span>
-                                        </td>
-                                        <td>
-                                            <select class="form-control" name="select">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <span class="text-primary">$39.99</span>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="close">×</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a href="shop-single-product-v1.html">
-                                                <img width="60px" src="img/products/bags_07.jpg" alt="product">
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <h6 class="regular"><a href="shop-single-product-v1.html">Lorem Ipsum</a></h6>
-                                            <p>Sed aliquam tincidunt tempus</p>
-                                        </td>
-                                        <td>
-                                            <span>$29.99</span>
-                                        </td>
-                                        <td>
-                                            <select class="form-control" name="select">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <span class="text-primary">$29.99</span>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="close">×</button>
-                                        </td>
-                                    </tr>
+                                        <tr v-for="cartProduct in cart.cartProducts">
+                                            <td>
+                                                <a :href="'/product/' + cartProduct.product.id + '/' + cartProduct.product.name">
+                                                    <img width="50px" :src='getProductPicture(cartProduct.product.gallery[0].picture)' :alt='cartProduct.product.name'>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <h6 class="regular"><a :href="'/product/' + cartProduct.product.id + '/' + cartProduct.product.name">{{cartProduct.product.name}}</a></h6>
+                                            </td>
+                                            <td class="text-rigth">
+                                                <span>{{cartProduct.product.value}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control col-md-1" name="amount" v-model="cartProduct.amount" />
+                                            </td>
+                                            <td class="text-right">
+                                                <span class="text-primary">{{cartProduct.totalValue}}</span>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="close" @click="removeToCart(cartProduct)">×</button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table><!-- end table -->
                             </div><!-- end table-responsive -->
-
-                            <hr class="spacer-10 no-border">
-
-                            <a href="shop-sidebar-left.html" class="btn btn-light semi-circle btn-md pull-left">
-                                <i class="fa fa-arrow-left mr-5"></i> Continue shopping
-                            </a>
-
-                            <a href="checkout.html" class="btn btn-default semi-circle btn-md pull-right">
-                                Checkout <i class="fa fa-arrow-right ml-5"></i>
-                            </a>
+                            <div v-else class="text-center">
+                                <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></strong> Seu carrinho esta vazio!
+                            </div>
                         </div><!-- end col -->
                     </div><!-- end row -->
+                    <hr class="spacer-20">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <h6>Calcular Frete</h6>
+                                <input type="text" id="firstname" class="form-control input-lg" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <h6>Cupom de Desconto</h6>
+                                <input type="text" id="firstname" class="form-control input-lg" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Totais</h6>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-9">Sub-Total</td>
+                                    <td class="col-md-3 text-right">{{cart.subTotalCart}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-9">Frete</td>
+                                    <td class="col-md-3 text-right">0</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-9">Total</td>
+                                    <td class="col-md-3 text-right">{{cart.totalCart}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <hr class="spacer-10 no-border">
+
+                        <a href="index.html" class="btn btn-light semi-circle btn-md pull-left">
+                            <i class="fa fa-arrow-left mr-5"></i> Continuar comprando
+                        </a>
+
+                        <a href="checkout.html" class="btn btn-default semi-circle btn-md pull-right">
+                            Finalizar Compra <i class="fa fa-arrow-right ml-5"></i>
+                        </a>
+                    </div>
                 </div><!-- end col -->
             </div><!-- end row -->
         </div><!-- end container -->

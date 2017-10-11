@@ -2,16 +2,14 @@ var header = new Vue({
     el: '#header',
     data: {
         navList: [],
-        cart: {
-          totalAmount: 0
-        }
+        totalAmount: 0
     },
     methods: {
 
-        getCart: function () {
+        getAmountCart: function () {
             var self = this;
-            util.httpGet("/cart/token/" + this.getCartToken()).then(function (data) {
-                self.cart = data;
+            util.httpGet("/cart/amountTotalCart").then(function (data) {
+                self.totalAmount = data;
             });
         },
 
@@ -25,51 +23,24 @@ var header = new Vue({
         addProduct: function (product, amount) {
 
             var cartProduct = {
+                id: new Date().getTime(),
                 product: product,
                 amount: amount
             };
 
             var url = "/cart";
-            if (this.checkCartToken()) {
-                url += "/token?token=" + this.getCartToken();
-            }
 
             var self = this;
             util.httpPostJson(url, cartProduct).then(function (data) {
-                if (!self.checkCartToken()) {
-                    self.saveCartToken(data.token);
-                }
                 setTimeout(function () {
                     location.pathname = "/cart";
                 }, 300);
             });
-
-        },
-
-        getCartToken: function () {
-            if(localStorage.getItem("cartToken") !== null){
-                return localStorage.getItem("cartToken");
-            }
-            return "";
-        },
-
-        checkCartToken: function () {
-            return localStorage.getItem("cartToken") !== null;
-        },
-
-        saveCartToken: function (token) {
-            localStorage.setItem("cartToken", token);
-        },
-
-        clearCart: function () {
-
         }
 
     },
     mounted: function () {
         this.getNavbar();
-        if (this.checkCartToken()){
-            this.getCart();
-        }
+        this.getAmountCart();
     }
 });

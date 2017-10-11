@@ -1,14 +1,22 @@
 var cart = new Vue({
     el: '#cart',
     data: {
-        amount: 1,
-        product: {}
+        cart: []
     },
     methods: {
-        getProduct: function () {
+
+        getCart: function () {
             var self = this;
-            util.httpGet("/1").then(function (data) {
-                self.product = data;
+            util.httpGet("/cart/getCart").then(function (data) {
+                self.cart = data;
+            });
+        },
+
+        removeToCart: function (cartProduct) {
+            var self = this;
+            util.httpPostJson("/cart/removeToCart", cartProduct).then(function (data) {
+                self.cart = data;
+                header.totalAmount = data.totalAmount > 0 ? data.totalAmount : 0;
             });
         },
 
@@ -19,8 +27,13 @@ var cart = new Vue({
         getClass: function(key) {
             return key === 0 ? 'item active' : 'item';
         },
+
+        checkList: function (list) {
+            return list !== undefined && list !== null && list.length > 0;
+        }
+
     },
     mounted: function () {
-        this.getProduct();
+        this.getCart();
     }
 });

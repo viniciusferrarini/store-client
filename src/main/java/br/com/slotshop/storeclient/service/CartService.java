@@ -1,14 +1,18 @@
 package br.com.slotshop.storeclient.service;
 
-import br.com.slotshop.server.service.CrudService;
 import br.com.slotshop.storeclient.model.Cart;
 import br.com.slotshop.storeclient.model.CartProduct;
 
-public interface CartService extends CrudService<Cart, Long> {
+import javax.servlet.http.HttpSession;
 
-    Cart addToCart(CartProduct cartProduct, String token);
+public interface CartService {
 
-    Cart newCart(CartProduct cartProduct);
+    Cart addToCart(CartProduct cartProduct, HttpSession session);
 
-    Cart findByToken(String token);
+    Integer getAmountTotalCart(HttpSession session);
+
+    Cart getCart(HttpSession session);
+
+    Cart removeToCart(CartProduct cartProduct, HttpSession session);
+
 }
