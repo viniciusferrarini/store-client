@@ -21,7 +21,7 @@ public class PriceTimeServiceImpl implements PriceTimeService {
         String urlParameters = getUrlParameters(CourierParameters.builder()
                 .nCdEmpresa("")
                 .sDsSenha("")
-                .nCdServico("40010, 40045, 41106")
+                .nCdServico("04014, 04510")
                 .sCepOrigem("85501-530")
                 .sCepDestino(cepDestino)
                 .nVlPeso("1")

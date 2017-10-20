@@ -52,4 +52,19 @@ public class CartController {
         return priceTimeService.getPriceTime(zipDestiny);
     }
 
+    @PostMapping("/changeFreight")
+    private @ResponseBody Cart changeFreight(@RequestBody Cart cart, HttpSession session){
+        return cartService.changeFreight(cart, session);
+    }
+
+    @PostMapping("/changeAmount")
+    private @ResponseBody Cart changeAmount(@RequestBody Cart cart, HttpSession session){
+        return cartService.changeAmount(cart, session);
+    }
+
+    @PostMapping("/changePayment")
+    private @ResponseBody Cart changePayment(@RequestBody Cart cart, HttpSession session){
+        return cartService.changePayment(cart, session);
+    }
+
 }

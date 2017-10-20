@@ -1,6 +1,7 @@
 
 package br.com.slotshop.storeclient.model.xml;
 
+import br.com.slotshop.server.util.DoubleUtil;
 import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -50,5 +51,13 @@ public class CServicoType {
     private String valorSemAdicionais;
     @XmlElement(namespace = "http://tempuri.org/", required = true)
     private String obsFim;
+
+    public Double getValorDouble(){ ;
+        return this.valor != null ? Double.parseDouble(this.valor.replace(",", ".")) : 0.0;
+    }
+
+    public String getValorFormatted(){
+        return DoubleUtil.formatRealWithSimbol(getValorDouble());
+    }
 
 }

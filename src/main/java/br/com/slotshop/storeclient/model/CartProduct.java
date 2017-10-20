@@ -1,6 +1,7 @@
 package br.com.slotshop.storeclient.model;
 
 import br.com.slotshop.server.model.Product;
+import br.com.slotshop.server.util.DoubleUtil;
 import lombok.*;
 
 import java.io.Serializable;
@@ -28,6 +29,10 @@ public class CartProduct implements Serializable {
 
     public Double getTotalValue(){
         return this.product.getValue() * amount;
+    }
+
+    public String getTotalValueFormatted(){
+        return DoubleUtil.formatRealWithSimbol(getTotalValue());
     }
 
 }

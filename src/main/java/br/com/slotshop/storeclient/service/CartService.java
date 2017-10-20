@@ -15,4 +15,10 @@ public interface CartService {
 
     Cart removeToCart(CartProduct cartProduct, HttpSession session);
 
+    Cart changeFreight(Cart cart, HttpSession session);
+
+    Cart changeAmount(Cart cart, HttpSession session);
+
+    Cart changePayment(Cart cart, HttpSession session);
+
 }

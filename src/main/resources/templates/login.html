@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SlotShop - Carrinho de Compras</title>
+    <#include "/head.html" />
+</head>
+<#include "/header.html" />
+<body>
+        <div class="breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Login</a></li>
+                            <li class="active">Acesse sua conta</li>
+                        </ul><!-- end breadcrumb -->
+                    </div><!-- end col -->    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end breadcrumbs -->
+        
+        <!-- start section -->
+        <section class="section white-backgorund">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 text-left">
+                                <h2 class="title">Autenticação</h2>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                        
+                        <hr class="spacer-5"><hr class="spacer-20 no-border">
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5 class="subtitle">Acessar Conta</h5>
+                                <form action="/login" method="post">
+                                    <#if RequestParameters.error??>
+                                        <div class="alert alert-danger" align="center">
+                                            <strong>Invalid Login!</strong><br>Invalid username or password
+                                        </div>
+                                        <#elseif RequestParameters.logout??>
+                                            <div class="alert alert-info" align="center">
+                                                <strong>Logged out!</strong><br>You have Logged out of Loanstar
+                                            </div>
+                                    </#if>
+                                    <div class="form-group">
+                                        <label for="username">Seu e-mail</label>
+                                        <input type="email" class="form-control input-md" id="username" name="username" placeholder="Email Address" required autofocus>
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <label for="password">Sua Senha</label>
+                                        <input type="password" class="form-control input-md" id="password" name="password" placeholder="Password" required>
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <label><a href="forgot-password.html">Forgot Password</a></label>
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <button class="btn btn-default round btn-md"><i class="fa fa-lock mr-5"></i>Acessar</button>
+                                    </div><!-- end form-group -->
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                </form><!-- end form -->
+                            </div><!-- end col -->
+                            <div class="col-sm-6">
+                                <h5 class="subtitle">Não possuí conta? <span class="text-primary">Cadastre-se</span></h5>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="registerName">Name</label>
+                                        <input type="text" class="form-control input-md" id="registerName" placeholder="Name">
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <label for="registerEmail">Email address</label>
+                                        <input type="email" class="form-control input-md" id="registerEmail" placeholder="Email Address">
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <label for="registerPassword">Password</label>
+                                        <input type="password" class="form-control input-md" id="registerPassword" placeholder="Password">
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <a href="javascript:void(0);" class="btn btn-default round btn-md"><i class="fa fa-user mr-5"></i> Register</a>
+                                    </div><!-- end form-group -->
+                                </form><!-- end form -->
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div><!-- end col -->
+                </div><!-- end row -->                
+            </div><!-- end container -->
+        </section>
+        <!-- end section -->
+        <#include "/footer.html" />
+        <script type="text/javascript" src="/js/pages/checkout.js"></script>
+    </body>
+</html>

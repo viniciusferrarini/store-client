@@ -57,13 +57,13 @@
                                                 <h6 class="regular"><a :href="'/product/' + cartProduct.product.id + '/' + cartProduct.product.name">{{cartProduct.product.name}}</a></h6>
                                             </td>
                                             <td class="text-rigth">
-                                                <span>{{cartProduct.product.value}}</span>
+                                                <span>{{cartProduct.product.valueFormatted}}</span>
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control col-md-1" name="amount" v-model="cartProduct.amount" />
+                                                <input type="number" class="form-control col-md-1" name="amount" v-model="cartProduct.amount" v-on:change="changeAmount(cartProduct)" />
                                             </td>
                                             <td class="text-right">
-                                                <span class="text-primary">{{cartProduct.totalValue}}</span>
+                                                <span class="text-primary">{{cartProduct.totalValueFormatted}}</span>
                                             </td>
                                             <td>
                                                 <button type="button" class="close" @click="removeToCart(cartProduct)">×</button>
@@ -78,18 +78,20 @@
                         </div><!-- end col -->
                     </div><!-- end row -->
                     <hr class="spacer-20">
-                    <div class="row">
+                    <div class="row" v-if="checkList(cart.cartProducts)">
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <h6>Calcular Frete</h6>
-                                <input type="text" id="firstname" class="form-control input-lg" placeholder="First Name">
+                            <h6>Calcular Frete</h6>
+                            <div class="input-group">
+                                <input type="text" id="zipCode" v-model="zipCode" class="form-control" placeholder="CEP" required="required">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" @click="checkPriceAndTime">
+                                        <i class="fa fa-truck"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <h6>Cupom de Desconto</h6>
-                                <input type="text" id="firstname" class="form-control input-lg" placeholder="First Name">
-                            </div>
+
                         </div>
                         <div class="col-md-4">
                             <h6>Totais</h6>
@@ -97,15 +99,15 @@
                                 <tbody>
                                 <tr>
                                     <td class="col-md-9">Sub-Total</td>
-                                    <td class="col-md-3 text-right">{{cart.subTotalCart}}</td>
+                                    <td class="col-md-3 text-right">{{cart.subTotalCartFormatted}}</td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-9">Frete</td>
-                                    <td class="col-md-3 text-right">0</td>
+                                    <td class="col-md-3 text-right">{{cart.freight.valorFormatted}}</td>
                                 </tr>
                                 <tr>
                                     <td class="col-md-9">Total</td>
-                                    <td class="col-md-3 text-right">{{cart.totalCart}}</td>
+                                    <td class="col-md-3 text-right">{{cart.totalCartFormatted}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -114,11 +116,11 @@
                     <div class="row">
                         <hr class="spacer-10 no-border">
 
-                        <a href="index.html" class="btn btn-light semi-circle btn-md pull-left">
+                        <a href="/" class="btn btn-light semi-circle btn-md pull-left">
                             <i class="fa fa-arrow-left mr-5"></i> Continuar comprando
                         </a>
 
-                        <a href="checkout.html" class="btn btn-default semi-circle btn-md pull-right">
+                        <a href="/checkout" class="btn btn-default semi-circle btn-md pull-right" v-if="checkList(cart.cartProducts)">
                             Finalizar Compra <i class="fa fa-arrow-right ml-5"></i>
                         </a>
                     </div>
@@ -126,6 +128,34 @@
             </div><!-- end row -->
         </div><!-- end container -->
     </section>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="priceTimeModal" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Preços e Prazos</h4>
+                </div><!-- end modal-header -->
+                <div class="modal-body">
+                    <ul class="list list-unstyled">
+                        <li v-for="item in priceTime.cservico">
+                            <div class="radio-input radio-default">
+                                <input :id="item.codigo" type="radio" name="freight" :value="item" v-model="cart.freight" v-on:click="changeFreight(item)">
+                                <label :for="item.codigo">
+                                    <h6 class="alt-font">{{item.codigo === "4014" ? "SEDEX" : "PAC"}}: {{item.valor}} Reais</h6>
+                                    <p>Prazo de entrega: {{item.prazoEntrega}} dias úteis.</p>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div><!-- end modal-body -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>
+                </div>
+            </div><!-- end modal-content -->
+        </div><!-- end modal-dialog -->
+    </div>
 </div>
 <!-- end section -->
 <!-- end page -->
