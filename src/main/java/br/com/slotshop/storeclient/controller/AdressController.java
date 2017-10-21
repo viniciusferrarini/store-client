@@ -40,7 +40,10 @@ public class AdressController extends RestCrudController<UserAdress, Long> {
     @GetMapping("/userAdressByCartZipCode")
     public @ResponseBody UserAdress getUserAdressByCartZipCode(HttpSession httpSession){
         Cart cart = (Cart) httpSession.getAttribute("cart");
-        return userAdressService.getUserAdressByUserAndCartZipCode(cart.getZipCode());
+        if(cart != null) {
+            return userAdressService.getUserAdressByUserAndCartZipCode(cart.getZipCode());
+        }
+        return null;
     }
 
     @PostMapping("/removeUserAdress")

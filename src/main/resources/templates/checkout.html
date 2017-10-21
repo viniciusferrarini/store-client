@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SlotShop - Carrinho de Compras</title>
+    <title>SlotShop - Finalização de Compra</title>
     <#include "/head.html" />
 </head>
 <#include "/header.html" />
@@ -33,7 +33,7 @@
                         </div><!-- end col -->
                     </div><!-- end row -->
 
-                    <hr class="spacer-5"><hr class="spacer-20 no-border">
+                    <hr class="spacer-5"><hr class="spacer-20">
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -214,7 +214,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4">Dono do Cartão<span class="text-danger">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" class="form-control required" name="cardholder" placeholder="" :disabled="cartDisabled" required>
+                                                                            <input type="text" class="form-control required" name="cardHolder" v-model="checkout.cardHolder" placeholder="" :disabled="cartDisabled" required>
                                                                         </div><!-- end col -->
                                                                     </div><!-- end row -->
                                                                 </div><!-- end form-group -->
@@ -222,7 +222,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4">Número do Cartão <span class="text-danger">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="text" maxlength="16" class="form-control required" name="cardnumber" placeholder="" :disabled="cartDisabled" pattern="\d*" />
+                                                                            <input type="text" maxlength="16" class="form-control required" name="cardNumber" v-model="checkout.cardNumber" placeholder="" :disabled="cartDisabled" pattern="\d*" />
                                                                         </div><!-- end col -->
                                                                     </div><!-- end row -->
                                                                 </div><!-- end form-group -->
@@ -232,10 +232,10 @@
                                                                         <div class="col-sm-8">
                                                                             <div class="row">
                                                                                 <div class="col-sm-6">
-                                                                                    <input type="number" name="mes" placeholder="Mês (Ex: 01)" class="form-control required" :disabled="cartDisabled" required>
+                                                                                    <input type="number" name="expirationMonth" v-model="checkout.expirationMonth" placeholder="Mês (Ex: 01)" class="form-control required" :disabled="cartDisabled" required>
                                                                                 </div><!-- end col -->
                                                                                 <div class="col-sm-6">
-                                                                                    <input type="number" name="ano" placeholder="Ano (Ex: 2017)" class="form-control required" :disabled="cartDisabled" required>
+                                                                                    <input type="number" name="expirationYear" v-model="checkout.expirationYear" placeholder="Ano (Ex: 2017)" class="form-control required" :disabled="cartDisabled" required>
                                                                                 </div><!-- end col -->
                                                                             </div><!-- end row -->
                                                                         </div><!-- end col -->
@@ -245,7 +245,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4">Código de Verificação <span class="text-danger">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" name="number" placeholder="" class="form-control mb-10 required" :disabled="cartDisabled" required>
+                                                                            <input type="number" name="verificationNumber" v-model="checkout.verificationNumber" placeholder="" class="form-control mb-10 required" :disabled="cartDisabled" required>
                                                                         </div><!-- end col -->
                                                                     </div><!-- end row -->
                                                                 </div><!-- end form-group -->
@@ -253,7 +253,7 @@
                                                                     <div class="row">
                                                                         <label class="col-sm-4">Número de Parcelas <span class="text-danger">*</span></label>
                                                                         <div class="col-sm-8">
-                                                                            <select class="form-control" name="select" :disabled="cartDisabled" required>
+                                                                            <select class="form-control" name="select" :disabled="cartDisabled" required v-model="checkout.amountParcel">
                                                                                 <option v-for="item in parcel" :value="item.parcel">{{item.description}}</option>
                                                                             </select>
                                                                         </div><!-- end col -->
@@ -294,7 +294,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-sm-offset-4 col-sm-8 text-right">
-                                                        <a href="order-confirmation.html" class="btn btn-default btn-md round">Pagar <i class="fa fa-arrow-circle-right ml-5"></i></a>
+                                                        <button class="btn btn-default btn-md round" @click="payment()">Pagar <i class="fa fa-arrow-circle-right ml-5"></i></button>
                                                     </div><!-- end col -->
                                                 </div><!-- end row -->
                                             </div><!-- end form-group -->

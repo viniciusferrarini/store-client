@@ -9,7 +9,8 @@ var checkout = new Vue({
         priceTime: [],
         zipCode: "",
         parcel: [],
-        cartDisabled: true
+        cartDisabled: true,
+        checkout: {}
     },
     methods: {
 
@@ -19,6 +20,7 @@ var checkout = new Vue({
                 self.cart = data;
                 setTimeout(function () {
                     self.getParcel();
+                    self.checkPayment();
                 }, 300);
             });
         },
@@ -166,7 +168,21 @@ var checkout = new Vue({
             util.httpPostJson("/cart/changePayment", this.cart).then(function (data) {
                 self.cart = data;
             });
+        },
+
+        payment: function () {
+            var self = this;
+            self.checkout.paymentType = self.cart.payment;
+            self.checkout.userAdress = self.selectedAdress;
+            util.httpPostJson("/buy", self.checkout).then(function (data) {
+                setTimeout(function () {
+                    location.pathname = "/buyConfirmation";
+                }, 300);
+            }, function (error) {
+                toastr.danger("Ocorreu um erro ao finalizar sua compra! Verifique os dados de pagamento e tente novamente!", "Erro!")
+            });
         }
+
     },
 
     mounted: function () {
