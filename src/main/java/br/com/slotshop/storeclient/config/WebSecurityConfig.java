@@ -1,6 +1,7 @@
 package br.com.slotshop.storeclient.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -23,14 +25,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/error/**").permitAll()
                     .antMatchers(HttpMethod.GET,  "/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
-                    .antMatchers(HttpMethod.GET, "/", "/findFirst10", "/picture").permitAll()
-                    .antMatchers(HttpMethod.GET, "/navbar/**", "/product/**", "/cart/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/cart/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/", "/findFirst10", "/picture", "/search/findBySearchTermAndPage").permitAll()
+                    .antMatchers(HttpMethod.GET, "/navbar/**", "/product/**", "/cart/**", "/category").permitAll()
+                    .antMatchers(HttpMethod.POST, "/cart/**", "/register/newUser", "/search/findBySearchTerm").permitAll()
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/client").permitAll()
+                    .defaultSuccessUrl("/buy").permitAll()
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
@@ -39,6 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

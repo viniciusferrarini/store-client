@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SlotShop - Minhas Compras</title>
+    <#include "/head.html" />
+</head>
+<#include "/header.html" />
+<div id="buy">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Área do Cliente</a></li>
+                        <li class="active">Minhas Compras</li>
+                    </ul><!-- end breadcrumb -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumbs -->
+    <section class="section white-backgorund">
+        <div class="container">
+            <div class="row">
+                <!-- start sidebar -->
+                <div class="col-sm-3">
+                    <#include "/navaccount.html" />
+                </div><!-- end col -->
+                <!-- end sidebar -->
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <h2 class="title">Minhas Compras</h2>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+
+                    <hr class="spacer-5"><hr class="spacer-20 no-border">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Data da Compra</th>
+                                            <th>Valor</th>
+                                            <th>Status</th>
+                                            <th>Mais</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in buyList">
+                                            <td>
+                                                {{item.id}}
+                                            </td>
+                                            <td>
+                                                {{item.dateFormatted}}
+                                            </td>
+                                            <td>
+                                                {{item.totalFormatted}}
+                                            </td>
+                                            <td>
+                                                <span class="text-primary">{{item.statusLabel}}</span>
+                                            </td>
+                                            <td>
+                                                <a :href="'/buyDetails/' + item.id" class="btn btn-primary semi-circle btn-sm">Ver Mais</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table><!-- end table -->
+                            </div><!-- end table-responsive -->
+
+                            <hr class="spacer-10 no-border">
+
+                            <a href="/" class="btn btn-light semi-circle btn-md">
+                                <i class="fa fa-arrow-left mr-5"></i> Continuar Comprando
+                            </a>
+                        </div>
+                    </div><!-- end row -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+</div>
+<#include "/footer.html" />
+<script type="text/javascript" src="/js/pages/buy.js"></script>
+</body>
+</html>

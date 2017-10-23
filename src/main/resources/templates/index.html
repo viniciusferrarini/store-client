@@ -51,38 +51,39 @@
 <section class="section white-background" id="index">
     <div class="container">
         <div class="row column-4">
-            <div class="col-sm-6 col-md-3" v-for="product in productList">
-                <div class="thumbnail store style1">
-                    <div class="header">
-                        <div class="badges">
-                            <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
+            <#list products as product>
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail store style1">
+                        <div class="header">
+                            <div class="badges">
+                                <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
+                            </div>
+                            <figure class="layer">
+                                <a href="/product/${product.id}/${product.name}">
+                                    <img src="http://localhost:7990/gallery/picture/${product.firstPictureFromGallery}" alt="${product.name}">
+                                </a>
+                            </figure>
+                            <div class="icons">
+                                <a class="icon semi-circle" href="/product/${product.id}/${product.name}"><i class="fa fa-search"></i></a>
+                            </div>
                         </div>
-                        <figure class="layer">
-                            <a :href="'/product/' + product.id + '/' + product.name">
-                                <img :src="getProductPicture(product)" alt="">
-                            </a>
-                        </figure>
-                        <div class="icons">
-                            <a class="icon semi-circle" :href="'/product/' + product.id + '/' + product.name"><i class="fa fa-search"></i></a>
-                        </div>
-                    </div>
-                    <div class="caption">
-                        <h6 class="regular"><a :href="'/product/' + product.id + '/' + product.name">{{product.name}}</a></h6>
-                        <div class="price">
-                            <small class="amount off"></small>
-                            <a :href="'/product/' + product.id + '/' + product.name"><span class="amount text-primary">{{product.valueFormatted}}</span></a>
-                        </div>
-                        <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
-                    </div><!-- end caption -->
-                </div><!-- end thumbnail -->
-            </div><!-- end col -->
+                        <div class="caption">
+                            <h6 class="regular"><a href="/product/${product.id}/${product.name}">${product.name}</a></h6>
+                            <div class="price">
+                                <small class="amount off"></small>
+                                <a href="/product/${product.id}/${product.name}"><span class="amount text-primary">${product.valueFormatted}</span></a>
+                            </div>
+                            <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
+                        </div><!-- end caption -->
+                    </div><!-- end thumbnail -->
+                </div><!-- end col -->
+            </#list>
         </div><!-- end row -->
     </div><!-- end container -->
 </section>
 <!-- end section -->
 <!-- end section -->
 <#include "/footer.html" />
-<script type="text/javascript" src="/js/pages/index.js"></script>
 <script type="text/javascript" src="/js/navbar.js"></script>
 </body>
 </html>

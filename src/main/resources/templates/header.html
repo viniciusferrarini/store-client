@@ -20,7 +20,7 @@
                         <li><a href="/login">Criar Conta</a></li>
                         <li class="divider"></li>
                         <li><a href="/cart">Meu Carrinho</a></li>
-                        <li><a href="/buys">Meus Pedidos</a></li>
+                        <li><a href="/buy">Meus Pedidos</a></li>
                     </ul>
                 </li>
             </ul>
@@ -37,15 +37,16 @@
                     </a>
                 </div><!-- end col -->
                 <div class="col-sm-7 vertical-align text-center">
-                    <form>
+                    <form action="/search/findBySearchTerm" method="post">
                         <div class="row grid-space-1">
                             <div class="col-sm-9">
-                                <input type="text" name="keyword" class="form-control input-lg" placeholder="Buscar">
+                                <input type="text" name="search" class="form-control input-lg" placeholder="Buscar" minlength="3">
                             </div><!-- end col -->
                             <div class="col-sm-3">
                                 <input type="submit"  class="btn btn-default btn-block btn-lg" value="Buscar">
                             </div><!-- end col -->
                         </div><!-- end row -->
+                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
                     </form>
                 </div><!-- end col -->
                 <div class="col-sm-4 vertical-align header-items hidden-xs">
@@ -93,7 +94,7 @@
                                 </a>
                                 <ul class="dropdown-menu" v-if="nav.subCategory.length > 0">
                                     <li v-for="sub in nav.subCategory">
-                                        <a href="category.html">{{sub.name}}</a>
+                                        <a :href="'/category?id=' + sub.id + '&page=0'">{{sub.name}}</a>
                                     </li>
                                 </ul>
                             </li>

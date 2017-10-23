@@ -6,6 +6,7 @@
 </head>
 <#include "/header.html" />
 <body>
+    <div id="login">
         <div class="breadcrumbs">
             <div class="container">
                 <div class="row">
@@ -39,23 +40,16 @@
                                 <form action="/login" method="post">
                                     <#if RequestParameters.error??>
                                         <div class="alert alert-danger" align="center">
-                                            <strong>Invalid Login!</strong><br>Invalid username or password
+                                            <strong>Erro ao realizar login!</strong><br>E-mail ou senha inválidos
                                         </div>
-                                        <#elseif RequestParameters.logout??>
-                                            <div class="alert alert-info" align="center">
-                                                <strong>Logged out!</strong><br>You have Logged out of Loanstar
-                                            </div>
                                     </#if>
                                     <div class="form-group">
                                         <label for="username">Seu e-mail</label>
-                                        <input type="email" class="form-control input-md" id="username" name="username" placeholder="Email Address" required autofocus>
+                                        <input type="email" class="form-control input-md" id="username" name="username" placeholder="Email" required autofocus>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
-                                        <label for="password">Sua Senha</label>
-                                        <input type="password" class="form-control input-md" id="password" name="password" placeholder="Password" required>
-                                    </div><!-- end form-group -->
-                                    <div class="form-group">
-                                        <label><a href="forgot-password.html">Forgot Password</a></label>
+                                        <label for="password">Sua senha</label>
+                                        <input type="password" class="form-control input-md" id="password" name="password" placeholder="Senha" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
                                         <button class="btn btn-default round btn-md"><i class="fa fa-lock mr-5"></i>Acessar</button>
@@ -65,21 +59,25 @@
                             </div><!-- end col -->
                             <div class="col-sm-6">
                                 <h5 class="subtitle">Não possuí conta? <span class="text-primary">Cadastre-se</span></h5>
-                                <form>
+                                <form v-on:submit='newUser()'>
                                     <div class="form-group">
-                                        <label for="registerName">Name</label>
-                                        <input type="text" class="form-control input-md" id="registerName" placeholder="Name">
+                                        <label for="name">Seu nome</label>
+                                        <input type="text" class="form-control input-md" id="name" name="name" placeholder="Nome" v-model="user.name" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
-                                        <label for="registerEmail">Email address</label>
-                                        <input type="email" class="form-control input-md" id="registerEmail" placeholder="Email Address">
+                                        <label for="email">Seu e-mail</label>
+                                        <input type="email" class="form-control input-md" id="email" name="email" v-model="user.email" placeholder="Email" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
-                                        <label for="registerPassword">Password</label>
-                                        <input type="password" class="form-control input-md" id="registerPassword" placeholder="Password">
+                                        <label for="cpfCnpj">CPF/CNPJ</label>
+                                        <input type="text" class="form-control input-md" id="cpfCnpj" name="cpfCnpj" v-model="user.cpfCnpj" placeholder="CPF/CNPJ" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
-                                        <a href="javascript:void(0);" class="btn btn-default round btn-md"><i class="fa fa-user mr-5"></i> Register</a>
+                                        <label for="password">Sua senha</label>
+                                        <input type="password" class="form-control input-md" id="password" name="password" v-model="user.password" placeholder="Senha" required>
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <button class="btn btn-default round btn-md"><i class="fa fa-user mr-5"></i>Cadastrar</button>
                                     </div><!-- end form-group -->
                                 </form><!-- end form -->
                             </div><!-- end col -->
@@ -89,7 +87,8 @@
             </div><!-- end container -->
         </section>
         <!-- end section -->
-        <#include "/footer.html" />
-        <script type="text/javascript" src="/js/pages/checkout.js"></script>
+    </div>
+    <#include "/footer.html" />
+    <script type="text/javascript" src="/js/pages/login.js"></script>
     </body>
 </html>

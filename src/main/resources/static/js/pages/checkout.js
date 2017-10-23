@@ -179,7 +179,7 @@ var checkout = new Vue({
                     location.pathname = "/buyConfirmation";
                 }, 300);
             }, function (error) {
-                toastr.danger("Ocorreu um erro ao finalizar sua compra! Verifique os dados de pagamento e tente novamente!", "Erro!")
+                toastr.error("Ocorreu um erro ao finalizar sua compra! Verifique os dados de pagamento e tente novamente!", "Erro!")
             });
         }
 

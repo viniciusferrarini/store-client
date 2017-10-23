@@ -3,11 +3,10 @@ package br.com.slotshop.storeclient.service.impl;
 import br.com.slotshop.server.enumeration.FreightType;
 import br.com.slotshop.server.enumeration.OrderStatus;
 import br.com.slotshop.server.enumeration.PaymentType;
-import br.com.slotshop.server.model.Buy;
-import br.com.slotshop.server.model.BuyFreight;
-import br.com.slotshop.server.model.BuyPayment;
-import br.com.slotshop.server.model.BuyProduct;
+import br.com.slotshop.server.model.*;
 import br.com.slotshop.server.repository.data.BuyData;
+import br.com.slotshop.server.service.ProductService;
+import br.com.slotshop.server.service.UserService;
 import br.com.slotshop.storeclient.model.Cart;
 import br.com.slotshop.storeclient.model.CartProduct;
 import br.com.slotshop.storeclient.model.dto.Checkout;
@@ -26,20 +25,27 @@ public class BuyClientServiceImpl implements BuyClientService {
 
     @Autowired private BuyData buyData;
 
+    @Autowired private UserService userService;
+
+    @Autowired private ProductService productService;
+
     @Override
     public Buy buy(Checkout checkout, HttpSession session) {
 
         Cart cart = getCart(session);
+        session.removeAttribute("cart");
 
-        return buyData.save(Buy.builder()
-                .payment(checkout.getPaymentType().equals(PaymentType.CREDITCARD) ? newBuyPaymentCreditCard(checkout, cart) : newBuyPaymentTicket(cart))
-                .freight(newBuyFreight(cart))
-                .adress(checkout.getUserAdress())
-                .products(buyProductList(cart))
-                .date(new Date())
-                .total(getTotalByPayment(cart.getTotalCart(), cart.getPayment()))
-                .status(OrderStatus.PAYMENTAPPROVED)
-                .build());
+        Buy buy = new Buy();
+        buy.setPayment(checkout.getPaymentType().equals(PaymentType.CREDITCARD) ? newBuyPaymentCreditCard(checkout, cart) : newBuyPaymentTicket(cart));
+        buy.setFreight(newBuyFreight(cart));
+        buy.setAdress(checkout.getUserAdress());
+        buy.setProducts(buyProductList(cart, buy));
+        buy.setUser(userService.getLoggedUser());
+        buy.setDate(new Date());
+        buy.setTotal(getTotalByPayment(cart.getTotalCart(), cart.getPayment()));
+        buy.setStatus(OrderStatus.PAYMENTAPPROVED);
+
+        return buyData.save(buy);
 
     }
 
@@ -75,17 +81,26 @@ public class BuyClientServiceImpl implements BuyClientService {
                 .build();
     }
 
-    private List<BuyProduct> buyProductList(Cart cart){
+    private List<BuyProduct> buyProductList(Cart cart, Buy buy){
         List<BuyProduct> buyProducts = new ArrayList<>();
         List<CartProduct> cartProducts = cart.getCartProducts();
         for (CartProduct cartProduct : cartProducts) {
+            Product product = refreshProductAmount(cartProduct);
             buyProducts.add(BuyProduct.builder()
-                    .product(cartProduct.getProduct())
+                    .product(product)
                     .amount(cartProduct.getAmount())
-                    .total(cartProduct.getTotal())
+                    .buy(buy)
+                    .total(product.getValue() * cartProduct.getAmount())
                     .build());
         }
         return buyProducts;
+    }
+
+    private Product refreshProductAmount(CartProduct cartProduct) {
+        Product product = cartProduct.getProduct();
+        product.setAmount(product.getAmount() - cartProduct.getAmount());
+        productService.save(product);
+        return product;
     }
 
     private FreightType verificationFreight(String code){
