@@ -56,7 +56,7 @@
                     <div class="thumbnail store style1">
                         <div class="header">
                             <div class="badges">
-                                <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
+                                <span class="product-badge top right danger-background text-white semi-circle">-10%</span>
                             </div>
                             <figure class="layer">
                                 <a href="/product/${product.id}/${product.name}">
@@ -71,9 +71,11 @@
                             <h6 class="regular"><a href="/product/${product.id}/${product.name}">${product.name}</a></h6>
                             <div class="price">
                                 <small class="amount off"></small>
-                                <a href="/product/${product.id}/${product.name}"><span class="amount text-primary">${product.valueFormatted}</span></a>
+                                <a href="/product/${product.id}/${product.name}">
+                                    <h5 class="text-primary text-center">${product.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${product.valueParcelFormatted} no cartão de crédito.</h6>
+                                </a>
                             </div>
-                            <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
+
                         </div><!-- end caption -->
                     </div><!-- end thumbnail -->
                 </div><!-- end col -->

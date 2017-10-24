@@ -45,7 +45,7 @@
                         </div><!-- end carousel-inner -->
                         <!-- thumbs -->
                         <ol class="carousel-indicators mCustomScrollbar meartlab">
-                            <li data-target=".product-slider" v-for="picture, key in product.gallery" v-bind:class="getClass(key)" :data-slide-to="key" v-bind:class="key === 0 ? 'active' : ''"><img :src='getProductPicture(picture.picture)' :alt='product.name'></li>
+                            <li data-target=".product-slider" v-for="picture, key in product.gallery" v-bind:class="getClass(key)" :data-slide-to="key" v-bind:class="key === 0 ? 'active' : ''"><img :src="'http://localhost:7990/gallery/picture/' + product.firstPictureFromGallery" :alt='product.name'></li>
                         </ol><!-- end carousel-indicators -->
                     </div>
                 </div><!-- end col -->
@@ -55,11 +55,11 @@
                         <div class="col-sm-12">
                             <h2 class="title">{{product.name}}</h2>
                             <p class="text-gray alt-font">Ref: {{product.id}}</p>
-
-                            <ul class="list list-inline">
-                                <li><h6 class="text-danger text-xs">$179.99</h6></li>
-                                <li><h5 class="text-primary">{{product.valueFormatted}}</h5></li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5 class="text-primary">{{product.valueWithDiscountFormatted}} à vista ou</h5><h6 class="text-danger text-xs"> 12x de {{product.valueParcelFormatted}} no cartão de crédito.</h6>
+                                </div>
+                            </div>
                         </div><!-- end col -->
                     </div><!-- end row -->
 
@@ -69,23 +69,23 @@
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-md-4 col-sm-12">
-                                    <select class="form-control" name="select" v-model="amount">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                    </select>
+                                    <input type="number" class="form-control" name="amount" v-model="amount" value="1"> <small class="text-danger">Restam {{product.amount}} unidades.</small>
                                 </div><!-- end col -->
                             </div><!-- end row -->
                             <hr class="spacer-15">
                             <ul class="list list-inline">
-                                <li>
-                                    <a href="#" class="btn btn-default btn-lg round" v-on:click="header.addProduct(product, amount)">
+                                <li v-if="product.amount > 0">
+                                    <div id="alert-amount" class="alert alert-warning" role="alert" style="display: none">
+                                        <strong>Desculpe!</strong> Restam apenas {{product.amount}} unidades em estoque.
+                                    </div>
+                                    <button class="btn btn-default btn-lg round" v-on:click="header.addProduct(product, amount)">
                                         <i class="fa fa-shopping-basket mr-5"></i> Adicionar ao Carrinho
-                                    </a>
+                                    </button>
+                                </li>
+                                <li v-if="product.amount <= 0">
+                                    <button class="btn btn-danger btn-lg round">
+                                        <i class="fa fa-close mr-5"></i> PRODUTO INDISPONÍVEL
+                                    </button>
                                 </li>
                             </ul>
                         </div><!-- end col -->

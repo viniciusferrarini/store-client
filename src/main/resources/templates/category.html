@@ -29,10 +29,10 @@
             <hr class="spacer-5"><hr class="spacer-20 no-border">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="row column-4">
+                    <div class="row">
                         <#if (totalElements>0)>
                             <#list products as item>
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-2 col-md-3">
                                     <div class="thumbnail store style1">
                                         <div class="header">
                                             <div class="badges">
@@ -51,7 +51,9 @@
                                             <h6 class="regular"><a href="/product/${item.id}/${item.name}">${item.name}</a></h6>
                                             <div class="price">
                                                 <small class="amount off"></small>
-                                                <a href="/product/${item.id}/${item.name}"><span class="amount text-primary">${item.valueFormatted}</span></a>
+                                                <a href="/product/${item.id}/${item.name}">
+                                                    <h5 class="text-primary text-center">${item.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${item.valueParcelFormatted} no cartão de crédito.</h6>
+                                                </a>
                                             </div>
                                             <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
                                         </div><!-- end caption -->
@@ -60,7 +62,7 @@
                             </#list>
                             <#else>
                                 <div class="col-md-12">
-                                    <p class="text-center">Nenhum produto foi encontrado!</p>
+                                    <p class="text-center">Desculpe, não temos produtos disponíveis!</p>
                                 </div>
                         </#if>
                     </div>

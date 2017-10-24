@@ -30,7 +30,7 @@ public class CategoryController {
         ModelAndView modelAndView = new ModelAndView("/category");
         modelAndView.addObject("categoryId", id);
         modelAndView.addObject("category", subCategory.getName());
-        getPageable(modelAndView, productService.findByCategory(subCategory.getCategory(), page));
+        getPageable(modelAndView, productService.findBySubCategoryAndPage(subCategory, page));
         return modelAndView;
     }
 
