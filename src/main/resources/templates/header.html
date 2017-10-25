@@ -10,17 +10,26 @@
                 <li class="linkdown">
                     <a href="javascript:void(0);">
                         <i class="fa fa-user mr-5"></i>
-                        <span class="hidden-xs">
+                        <span class="hidden-xs" v-if="!validUser()">
                             Minha Conta
+                            <i class="fa fa-angle-down ml-5"></i>
+                        </span>
+                        <span class="hidden-xs" v-if="validUser()">
+                            Bem vindo(a), {{user.name}}
                             <i class="fa fa-angle-down ml-5"></i>
                         </span>
                     </a>
                     <ul class="w-150">
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/login">Criar Conta</a></li>
+                        <li v-if="!validUser()"><a href="/login">Login</a></li>
+                        <li v-if="!validUser()"><a href="/login">Criar Conta</a></li>
                         <li class="divider"></li>
-                        <li><a href="/cart">Meu Carrinho</a></li>
-                        <li><a href="/buy">Meus Pedidos</a></li>
+                        <li v-if="validUser()"><a href="/myinfo">Informações Pessoais</a></li>
+                        <li v-if="validUser()"><a href="/myadress">Meus Endereços</a></li>
+                        <li v-if="validUser()"><a href="/cart">Meu Carrinho</a></li>
+                        <li v-if="validUser()"><a href="/buy">Minhas Compras</a></li>
+                        <li v-if="validUser()"><a href="/buy">Trocas</a></li>
+                        <li v-if="validUser()"><a href="/buy">Devoluções</a></li>
+                        <li v-if="validUser()"><a href="/logout">Sair</a></li>
                     </ul>
                 </li>
             </ul>
@@ -33,7 +42,7 @@
             <div class="row display-table">
                 <div class="col-sm-3 vertical-align text-left hidden-xs">
                     <a href="/">
-                        <img width="160" src="/img/logo-big.png" alt="" />
+                        <h3>SlotShop</h3>
                     </a>
                 </div><!-- end col -->
                 <div class="col-sm-7 vertical-align text-center">
@@ -71,16 +80,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="javascript:void(0);" class="navbar-brand visible-xs">
-                    <img src="/img/logo.png" alt="logo">
+                    <h3 style="margin-bottom: 10px;">SlotShop</h3>
                 </a>
             </div>
             <div id="navbar-collapse-3" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <!-- Home -->
                     <li><a href="/">Home<i class="ml-5"></i></a></li>
-                    <li><a href="#">Monte seu computador<i class="ml-5"></i></a></li>
-                    <li><a href="#">Fale Conosco<i class="ml-5"></i></a></li>
-                    <li><a href="#">Minha Conta<i class="ml-5"></i></a></li>
+                    <li><a href="/buy">Minha Conta<i class="ml-5"></i></a></li>
+                    <li><a href="/about">Sobre Nós<i class="ml-5"></i></a></li>
+                    <li><a href="/contact">Fale Conosco<i class="ml-5"></i></a></li>
                 </ul><!-- end navbar-nav -->
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown right">

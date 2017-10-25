@@ -85,7 +85,7 @@ var checkout = new Vue({
 
         removeAdress: function (adress) {
             var self = this;
-            util.httpPostJson("/userAdress/removeUserAdress", adress).then(function () {
+            util.httpPostJson("/userAdress/removeUserAdress", adress.id).then(function () {
                 var index = self.adressList.indexOf(adress);
                 if(index !== -1){
                     self.adressList.splice(index, 1);

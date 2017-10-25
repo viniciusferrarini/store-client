@@ -45,7 +45,7 @@
                         </div><!-- end carousel-inner -->
                         <!-- thumbs -->
                         <ol class="carousel-indicators mCustomScrollbar meartlab">
-                            <li data-target=".product-slider" v-for="picture, key in product.gallery" v-bind:class="getClass(key)" :data-slide-to="key" v-bind:class="key === 0 ? 'active' : ''"><img :src="'http://localhost:7990/gallery/picture/' + product.firstPictureFromGallery" :alt='product.name'></li>
+                            <li data-target=".product-slider" v-for="picture, key in product.gallery" v-bind:class="getClass(key)" :data-slide-to="key" v-bind:class="key === 0 ? 'active' : ''"><img :src='getProductPicture(picture.picture)' :alt='product.name'></li>
                         </ol><!-- end carousel-indicators -->
                     </div>
                 </div><!-- end col -->
@@ -67,7 +67,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="row">
+                            <div class="row" v-if="product.amount <= 10">
                                 <div class="col-md-4 col-sm-12">
                                     <input type="number" class="form-control" name="amount" v-model="amount" value="1"> <small class="text-danger">Restam {{product.amount}} unidades.</small>
                                 </div><!-- end col -->

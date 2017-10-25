@@ -69,13 +69,20 @@
                         </div>
                         <div class="caption">
                             <h6 class="regular"><a href="/product/${product.id}/${product.name}">${product.name}</a></h6>
-                            <div class="price">
-                                <small class="amount off"></small>
-                                <a href="/product/${product.id}/${product.name}">
-                                    <h5 class="text-primary text-center">${product.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${product.valueParcelFormatted} no cartão de crédito.</h6>
-                                </a>
-                            </div>
-
+                            <#if product.amount <= 0>
+                                <div class="text-center" style="margin-top: 10px;">
+                                    <button class="btn btn-danger semi-circle btn-sm">
+                                        <i class="fa fa-close mr-5"></i> Produto Indisponível
+                                    </button>
+                                </div>
+                                <#else>
+                                    <div class="price">
+                                        <small class="amount off"></small>
+                                        <a href="/product/${product.id}/${product.name}">
+                                            <h5 class="text-primary text-center">${product.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${product.valueParcelFormatted} no cartão de crédito.</h6>
+                                        </a>
+                                    </div>
+                            </#if>
                         </div><!-- end caption -->
                     </div><!-- end thumbnail -->
                 </div><!-- end col -->

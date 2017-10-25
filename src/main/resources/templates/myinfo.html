@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SlotShop - Minhas Informações</title>
+    <#include "/head.html" />
+</head>
+<#include "/header.html" />
+<div id="myinfo">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Área do Cliente</a></li>
+                        <li class="active">Minhas Informações</li>
+                    </ul><!-- end breadcrumb -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumbs -->
+    <section class="section white-backgorund">
+        <div class="container">
+            <div class="row">
+                <!-- start sidebar -->
+                <div class="col-sm-3">
+                    <#include "/navaccount.html" />
+                </div><!-- end col -->
+                <!-- end sidebar -->
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <h2 class="title">Informações pessoais</h2>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                    <hr class="spacer-5"><hr class="spacer-20 no-border">
+                    <form v-on:submit='saveInfo()'>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Seu Nome <span class="text-danger">*</span></label>
+                                    <input id="name" type="text" placeholder="Seu nome" name="name" class="form-control input-sm required" v-model="user.name" required>
+                                </div><!-- end form-group -->
+                                <div class="form-group">
+                                    <label for="email">Seu E-mail <span class="text-danger">*</span></label>
+                                    <input id="email" type="email" placeholder="Seu email" name="email" class="form-control input-sm required email" v-model="user.email" required>
+                                </div><!-- end form-group -->
+                                <div class="form-group">
+                                    <label for="cpfCnpj">CPF/CNPJ<span class="text-danger">*</span></label>
+                                    <input id="cpfCnpj" type="text" placeholder="CPF/CNPJ" id="cpfCnpj" name="cpfCnpj" class="form-control input-sm required" v-model="user.cpfCnpj" required>
+                                </div><!-- end form-group -->
+                                <div class="form-group">
+                                    <label for="birthday">Data de Nascimento</label>
+                                    <input id="birthday" type="text" placeholder="Data de Nascimento" name="birthday" class="form-control input-sm required" v-model="user.birthdayFormatted">
+                                </div><!-- end form-group -->
+                                <div class="form-group">
+                                    <label for="telephone">Telefone</label>
+                                    <input id="telephone" type="text" placeholder="Seu Telefone" name="telephone" class="form-control input-sm required" v-model="user.telephone">
+                                </div><!-- end form-group -->
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default round btn-md"><i class="fa fa-save mr-5"></i> Salvar</button>
+                                </div><!-- end form-group -->
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </form>
+                </div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+</div>
+<#include "/footer.html" />
+<script type="text/javascript" src="/js/pages/myinfo.js"></script>
+<script type="text/javascript" src="/js/plugins/mask/input.mask.js"></script>
+<script type="text/javascript">
+    $("input[id*='cpfCnpj']").inputmask({
+        mask: ['999.999.999-99', '99.999.999/9999-99'],
+        keepStatic: true
+    });
+
+    $("input[id*='birthday']").inputmask({
+        mask: ['99/99/9999'],
+        keepStatic: true
+    });
+
+    $("input[id*='telephone']").inputmask({
+        mask: ['(999) 99999 - 9999'],
+        keepStatic: true
+    });
+</script>
+</body>
+</html>

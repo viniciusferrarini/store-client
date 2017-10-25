@@ -13,6 +13,7 @@ var login = new Vue({
         newUser: function () {
             event.preventDefault();
             var self = this;
+            self.user.cpfCnpj = $('#cpfCnpj').val();
             util.httpPostJson("/register/newUser", self.user).then(function (data) {
                 location.pathname = "/buy";
             }, function (error) {

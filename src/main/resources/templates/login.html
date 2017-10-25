@@ -90,5 +90,12 @@
     </div>
     <#include "/footer.html" />
     <script type="text/javascript" src="/js/pages/login.js"></script>
+    <script type="text/javascript" src="/js/plugins/mask/input.mask.js"></script>
+    <script type="text/javascript">
+        $("input[id*='cpfCnpj']").inputmask({
+            mask: ['999.999.999-99', '99.999.999/9999-99'],
+            keepStatic: true
+        });
+    </script>
     </body>
 </html>

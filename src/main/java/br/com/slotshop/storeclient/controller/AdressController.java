@@ -47,9 +47,9 @@ public class AdressController extends RestCrudController<UserAdress, Long> {
     }
 
     @PostMapping("/removeUserAdress")
-    public @ResponseBody void removeUserAdress(@RequestBody UserAdress userAdress){
+    public @ResponseBody void removeUserAdress(@RequestBody Long id){
         try {
-            userAdressService.delete(userAdress.getId());
+            userAdressService.delete(id);
         }catch (Exception e){
             e.printStackTrace();
         }

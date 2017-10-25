@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SlotShop - Meus Endereços</title>
+    <#include "/head.html" />
+</head>
+<#include "/header.html" />
+<div id="myAdress">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Área do Cliente</a></li>
+                        <li class="active">Meus Endereços</li>
+                    </ul><!-- end breadcrumb -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end breadcrumbs -->
+    <section class="section white-backgorund">
+        <div class="container">
+            <div class="row">
+                <!-- start sidebar -->
+                <div class="col-sm-3">
+                    <#include "/navaccount.html" />
+                </div><!-- end col -->
+                <!-- end sidebar -->
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-12 text-left">
+                            <h2 class="title">Meus Endereços</h2>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                    <hr class="spacer-5"><hr class="spacer-20 no-border">
+                    <button type="button" class="btn btn-default round btn-xs" @click="newAdress()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <hr class="spacer-10 no-border">
+                    <div class="table-responsive" v-if="adressList.length > 0">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr v-for="item in adressList">
+                                <td>
+                                    <label :for="item.id">
+                                        <p>{{item.description}}</p>
+                                        <p style="color: #878c94">{{item.city}}/{{item.state}} - CEP: {{item.zipCode}}</p>
+                                        <p style="color: #878c94">{{item.district}}, {{item.street}} - {{item.number}}</p>
+                                    </label>
+                                    <div class="spacer-10">
+                                        <button class="btn btn-default btn-xs round" @click="editAdress(item)">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-xs round" @click="removeAdress(item)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- end table-responsive -->
+                    <div class="row" v-else>
+                        <p class="text-center">Você não possuí endereços cadastrados</p>
+                    </div>
+                </div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="adressModal" style="display: none;" id="adressModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Endereço de Entrega</h4>
+                </div><!-- end modal-header -->
+                <form v-on:submit='saveAdress()'>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="adressDescription">Descrição do endereço</label>
+                                    <input type="text" id="adressDescription" class="form-control input-md" placeholder="Ex: (Casa Mãe, Trabalho...)" required v-model="adress.description">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="zipCode">CEP</label>
+                                            <div class="input-group">
+                                                <input type="text" id="zipCode" class="form-control" placeholder="CEP" required v-model="adress.zipCode">
+                                                <span class="input-group-btn">
+                                                                <button class="btn btn-primary" type="button" @click="getCityByZipCode()">
+                                                                    <i class="fa fa-check"></i>
+                                                                </button>
+                                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-info" role="alert">
+                                            <strong>Eii!</strong> Informe o CEP e clique no botão ao lado para carregar seu endereço a partir do CEP.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="state">Estado</label>
+                                            <input type="text" id="state" class="form-control input-md" placeholder="Ex: (Paraná)" required v-model="adress.state">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="city">Cidade:</label>
+                                            <input type="text" id="city" class="form-control input-md" placeholder="Ex: (Curitiba)" required v-model="adress.city">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="district">Bairro:</label>
+                                    <input type="text" id="district" class="form-control input-md" placeholder="Ex: (Morumbi)" required v-model="adress.district">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group">
+                                            <label for="street">Rua:</label>
+                                            <input type="text" id="street" class="form-control input-md" placeholder="Ex: (Av. Getúlio Vargas)" requiredr v-model="adress.street">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="number">Número:</label>
+                                            <input type="number" id="number" class="form-control input-md" placeholder="Ex: 1234" required v-model="adress.number">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end row -->
+                    </div><!-- end modal-body -->
+                    <div class="modal-footer">
+                        <button class="btn btn-danger round btn-md" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary round btn-md">Salvar</button>
+                    </div>
+                </form>
+            </div><!-- end modal-content -->
+        </div><!-- end modal-dialog -->
+    </div>
+</div>
+<#include "/footer.html" />
+<script type="text/javascript" src="/js/pages/myadress.js"></script>
+<script type="text/javascript" src="/js/plugins/mask/input.mask.js"></script>
+<script type="text/javascript">
+    $("input[id*='zipCode']").inputmask({
+        mask: ['99999-999'],
+        keepStatic: true
+    });
+</script>
+</body>
+</html>

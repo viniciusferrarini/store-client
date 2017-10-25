@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,19 +43,22 @@ public class CartServiceImpl implements CartService {
     public Cart addToCart(CartProduct cartProduct, HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart != null) {
-            if (cart.getCartProducts().size() > 0) {
-                for (CartProduct product : cart.getCartProducts()) {
+            List<CartProduct> cartProducts = new ArrayList<>(cart.getCartProducts());
+            if (cartProducts.size() > 0 && checkCartProductExists(cartProduct, cart)) {
+                for (CartProduct product : cartProducts) {
                     if (cartProduct.getProduct().getId().equals(product.getProduct().getId())) {
                         product.setAmount(product.getAmount() + cartProduct.getAmount());
+                        product.setTotal(product.getProduct().getValue() * product.getAmount());
                     }
                 }
             }else{
-                cart.getCartProducts().add(cartProduct);
+                cartProducts.add(cartProduct);
             }
-            double subTotalCart = cart.getCartProducts().stream().mapToDouble(CartProduct::getTotalValue).sum();
+            double subTotalCart = cartProducts.stream().mapToDouble(CartProduct::getTotalValue).sum();
             cart.setSubTotalCart(subTotalCart);
-            cart.setTotalAmount(cart.getCartProducts().stream().mapToInt(CartProduct::getAmount).sum());
+            cart.setTotalAmount(cartProducts.stream().mapToInt(CartProduct::getAmount).sum());
             cart.setTotalCart(subTotalCart + (cart.getFreight().getValorDouble() != null ? cart.getFreight().getValorDouble() : 0));
+            cart.setCartProducts(cartProducts);
             return cart;
         }
         return newCart(cartProduct, session);
@@ -67,8 +71,6 @@ public class CartServiceImpl implements CartService {
         boolean present = cart.getCartProducts()
                 .stream()
                 .anyMatch(cartProd -> !cartProd.getId().equals(cartProduct.getId()));
-
-        List<Integer> contains= new ArrayList<>();
 
         if (present && cart.getCartProducts().size() > 1) {
             cart.setTotalAmount(cart.getTotalAmount() - cartProduct.getAmount());
@@ -126,6 +128,15 @@ public class CartServiceImpl implements CartService {
         cart.setCartProducts(Collections.singletonList(cartProduct));
         session.setAttribute("cart", cart);
         return cart;
+    }
+
+    private Boolean checkCartProductExists(CartProduct cartProduct, Cart cart){
+        for (CartProduct product : cart.getCartProducts()) {
+            if (cartProduct.getProduct().getId().equals(product.getProduct().getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

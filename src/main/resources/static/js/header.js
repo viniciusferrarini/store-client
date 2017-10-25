@@ -2,7 +2,8 @@ var header = new Vue({
     el: '#header',
     data: {
         navList: [],
-        totalAmount: 0
+        totalAmount: 0,
+        user: {}
     },
     methods: {
 
@@ -17,6 +18,13 @@ var header = new Vue({
             var self = this;
             util.httpGet("/navbar").then(function (data) {
                 self.navList = data;
+            });
+        },
+
+        getLoggedUser: function () {
+            var self = this;
+            util.httpGet("/user").then(function (data) {
+               self.user = data;
             });
         },
 
@@ -40,11 +48,16 @@ var header = new Vue({
             }else{
                 $('#alert-amount').show('fast');
             }
+        },
+
+        validUser: function () {
+            return this.user.id !== undefined && this.user.id !== "" && this.user.id !== null;
         }
 
     },
     mounted: function () {
         this.getNavbar();
         this.getAmountCart();
+        this.getLoggedUser();
     }
 });

@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/error/**").permitAll()
                     .antMatchers(HttpMethod.GET,  "/css/**", "/js/**", "/img/**", "/fonts/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/", "/findFirst10", "/picture", "/search/findBySearchTermAndPage").permitAll()
-                    .antMatchers(HttpMethod.GET, "/navbar/**", "/product/**", "/cart/**", "/category").permitAll()
+                    .antMatchers(HttpMethod.GET, "/navbar/**", "/product/**", "/cart/**", "/category", "/user").permitAll()
                     .antMatchers(HttpMethod.POST, "/cart/**", "/register/newUser", "/search/findBySearchTerm").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -31,7 +31,7 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <#if (totalElements>0)>
-                            <#list products as item>
+                            <#list products as product>
                                 <div class="col-sm-2 col-md-3">
                                     <div class="thumbnail store style1">
                                         <div class="header">
@@ -39,23 +39,30 @@
                                                 <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
                                             </div>
                                             <figure class="layer">
-                                                <a href="/product/${item.id}/${item.name}">
-                                                    <img src="http://localhost:7990/gallery/picture/${item.firstPictureFromGallery}" alt="${item.name}">
+                                                <a href="/product/${product.id}/${product.name}">
+                                                    <img src="http://localhost:7990/gallery/picture/${product.firstPictureFromGallery}" alt="${product.name}">
                                                 </a>
                                             </figure>
                                             <div class="icons">
-                                                <a class="icon semi-circle" href="/product/${item.id}/${item.name}"><i class="fa fa-search"></i></a>
+                                                <a class="icon semi-circle" href="/product/${product.id}/${product.name}"><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="caption">
-                                            <h6 class="regular"><a href="/product/${item.id}/${item.name}">${item.name}</a></h6>
-                                            <div class="price">
-                                                <small class="amount off"></small>
-                                                <a href="/product/${item.id}/${item.name}">
-                                                    <h5 class="text-primary text-center">${item.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${item.valueParcelFormatted} no cartão de crédito.</h6>
-                                                </a>
-                                            </div>
-                                            <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
+                                            <h6 class="regular"><a href="/product/${product.id}/${product.name}">${product.name}</a></h6>
+                                            <#if product.amount <= 0>
+                                                <div class="text-center" style="margin-top: 10px;">
+                                                    <button class="btn btn-danger semi-circle btn-sm">
+                                                        <i class="fa fa-close mr-5"></i> Produto Indisponível
+                                                    </button>
+                                                </div>
+                                                <#else>
+                                                    <div class="price">
+                                                        <small class="amount off"></small>
+                                                        <a href="/product/${product.id}/${product.name}">
+                                                            <h5 class="text-primary text-center">${product.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${product.valueParcelFormatted} no cartão de crédito.</h6>
+                                                        </a>
+                                                    </div>
+                                            </#if>
                                         </div><!-- end caption -->
                                     </div><!-- end thumbnail -->
                                 </div><!-- end col -->

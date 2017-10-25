@@ -25,8 +25,6 @@ public class CartProduct implements Serializable {
 
     private Product product;
 
-    private Cart cart;
-
     public Double getTotalValue(){
         return this.product.getValue() * amount;
     }
