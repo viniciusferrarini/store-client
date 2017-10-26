@@ -171,16 +171,22 @@ var checkout = new Vue({
         },
 
         payment: function () {
+            event.preventDefault();
             var self = this;
             self.checkout.paymentType = self.cart.payment;
-            self.checkout.userAdress = self.selectedAdress;
-            util.httpPostJson("/buy", self.checkout).then(function (data) {
-                setTimeout(function () {
-                    location.pathname = "/buyConfirmation";
-                }, 300);
-            }, function (error) {
-                toastr.error("Ocorreu um erro ao finalizar sua compra! Verifique os dados de pagamento e tente novamente!", "Erro!")
-            });
+            if(self.selectedAdress !== undefined && self.selectedAdress !== ""){
+                self.checkout.userAdress = self.selectedAdress;
+                util.httpPostJson("/buy", self.checkout).then(function (data) {
+                    setTimeout(function () {
+                        location.pathname = "/buyConfirmation";
+                    }, 300);
+                }, function (error) {
+                    toastr.error("Ocorreu um erro ao finalizar sua compra! Verifique os dados de pagamento e tente novamente!", "Erro!")
+                });
+            }else{
+                toastr.error("Para realizar o pagamento é necessário informar o endereço de entrega e a forma de envio!", "Erro!");
+            }
+
         }
 
     },

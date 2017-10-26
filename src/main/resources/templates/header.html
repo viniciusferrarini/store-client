@@ -24,11 +24,9 @@
                         <li v-if="!validUser()"><a href="/login">Criar Conta</a></li>
                         <li class="divider"></li>
                         <li v-if="validUser()"><a href="/myinfo">Informações Pessoais</a></li>
-                        <li v-if="validUser()"><a href="/myadress">Meus Endereços</a></li>
-                        <li v-if="validUser()"><a href="/cart">Meu Carrinho</a></li>
-                        <li v-if="validUser()"><a href="/buy">Minhas Compras</a></li>
-                        <li v-if="validUser()"><a href="/buy">Trocas</a></li>
-                        <li v-if="validUser()"><a href="/buy">Devoluções</a></li>
+                        <li v-if="validUser()"><a href="/myadress">Endereços</a></li>
+                        <li v-if="validUser()"><a href="/cart">Carrinho</a></li>
+                        <li v-if="validUser()"><a href="/buy">Compras</a></li>
                         <li v-if="validUser()"><a href="/logout">Sair</a></li>
                     </ul>
                 </li>
