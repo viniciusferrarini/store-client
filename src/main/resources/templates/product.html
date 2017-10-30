@@ -67,11 +67,14 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="row" v-if="product.amount <= 10">
+                            <div class="row">
                                 <div class="col-md-4 col-sm-12">
-                                    <input type="number" class="form-control" name="amount" v-model="amount" value="1"> <small class="text-danger">Restam {{product.amount}} unidades.</small>
+                                    <input type="number" class="form-control" name="amount" v-model="amount" value="1">
+                                    <div v-if="product.amount <= 10">
+                                        <small class="text-danger">Restam {{product.amount}} unidades.</small>
+                                    </div>
                                 </div><!-- end col -->
-                            </div><!-- end row -->
+                            </div>
                             <hr class="spacer-15">
                             <ul class="list list-inline">
                                 <li v-if="product.amount > 0">
