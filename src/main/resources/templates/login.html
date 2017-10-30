@@ -52,6 +52,11 @@
                                         <input type="password" class="form-control input-md" id="password" name="password" placeholder="Senha" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
+                                        <button type="button" class="btn btn-light-outline btn-xs" data-toggle="modal" data-target=".forgotPasswordModal">
+                                            Esqueceu sua senha?
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
                                         <button class="btn btn-default round btn-md"><i class="fa fa-lock mr-5"></i>Acessar</button>
                                     </div><!-- end form-group -->
                                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
@@ -70,14 +75,18 @@
                                     </div><!-- end form-group -->
                                     <div class="form-group">
                                         <label for="cpfCnpj">CPF/CNPJ</label>
-                                        <input type="text" class="form-control input-md" id="cpfCnpj" name="cpfCnpj" v-model="user.cpfCnpj" placeholder="CPF/CNPJ" required>
+                                        <input type="text" class="form-control input-md" id="cpfCnpj" name="cpfCnpj" required v-on:blur="checkCpfCnpj()">
                                     </div><!-- end form-group -->
                                     <div class="form-group">
                                         <label for="password">Sua senha</label>
                                         <input type="password" class="form-control input-md" id="password" name="password" v-model="user.password" placeholder="Senha" required>
                                     </div><!-- end form-group -->
                                     <div class="form-group">
-                                        <button class="btn btn-default round btn-md"><i class="fa fa-user mr-5"></i>Cadastrar</button>
+                                        <label for="cmfPassword">Confirme sua senha</label>
+                                        <input type="password" class="form-control input-md" id="cmfPassword" name="cmfPassword" v-model="cmfPassword" placeholder="Confirme sua senha" required v-on:blur="confirmPassword()">
+                                    </div><!-- end form-group -->
+                                    <div class="form-group">
+                                        <button class="btn btn-default round btn-md" :disabled="!isValidCpfCnpj || !isValidPassword"><i class="fa fa-user mr-5"></i>Cadastrar</button>
                                     </div><!-- end form-group -->
                                 </form><!-- end form -->
                             </div><!-- end col -->
@@ -87,14 +96,56 @@
             </div><!-- end container -->
         </section>
         <!-- end section -->
+        <div class="modal fade forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="icon-boxes style1">
+                                    <div class="icon">
+                                        <i class="fa fa-envelope text-dark"></i>
+                                    </div><!-- end icon -->
+                                    <div class="box-content">
+                                        <h6 class="alt-font text-dark text-uppercase">Esqueceu sua senha?</h6>
+                                        <p class="text-gray">Para recupera-la, preencha o campo a seguir com seu e-mail
+                                        e siga as instruções encaminhadas ao mesmo.</p>
+                                    </div>
+                                </div><!-- icon-box -->
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div><!-- end modal-header -->
+                    <div class="modal-body">
+                        <form v-on:submit="forgotPassword()">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control input-md" name="email" v-model="forgotPasswordEmail" placeholder="Email" required>
+                                    </div><!-- end form-group -->
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-default btn-block round btn-md"><i class="fa fa-send mr-5"></i>Enviar</button>
+                                    </div><!-- end form-group -->
+                                </div>
+                            </div><!-- end row -->
+                        </form>
+                    </div><!-- end modal-body -->
+                </div><!-- end modal-content -->
+            </div><!-- end modal-dialog -->
+        </div>
     </div>
     <#include "/footer.html" />
     <script type="text/javascript" src="/js/pages/login.js"></script>
     <script type="text/javascript" src="/js/plugins/mask/input.mask.js"></script>
+    <script type="text/javascript" src="/js/plugins/validation/validation.cpfCnpj.js"></script>
     <script type="text/javascript">
         $("input[id*='cpfCnpj']").inputmask({
             mask: ['999.999.999-99', '99.999.999/9999-99'],
-            keepStatic: true
+            keepStatic: false
         });
     </script>
     </body>

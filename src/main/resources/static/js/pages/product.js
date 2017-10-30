@@ -13,7 +13,7 @@ var product = new Vue({
         },
 
         getProductPicture: function (picture) {
-            return "http://localhost:7990/gallery/picture/" + picture;
+            return "http://130.211.158.13:7990/gallery/picture/" + picture;
         },
 
         getClass: function(key) {
