@@ -29,40 +29,65 @@
                 <!-- end sidebar -->
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-12 text-left">
-                            <h2 class="title">Informações pessoais</h2>
-                        </div><!-- end col -->
-                    </div><!-- end row -->
-                    <hr class="spacer-5"><hr class="spacer-20 no-border">
-                    <form v-on:submit='saveInfo()'>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <h6 class="title">Alterar Informações</h6>
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+                            <hr class="spacer-5"><hr class="spacer-10 no-border">
+                            <form v-on:submit='saveInfo()'>
                                 <div class="form-group">
                                     <label for="name">Seu Nome <span class="text-danger">*</span></label>
-                                    <input id="name" type="text" placeholder="Seu nome" name="name" class="form-control input-sm required" v-model="user.name" required>
+                                    <input id="name" type="text" placeholder="Seu nome" name="name" class="form-control input-md required" v-model="user.name" required>
                                 </div><!-- end form-group -->
                                 <div class="form-group">
                                     <label for="email">Seu E-mail <span class="text-danger">*</span></label>
-                                    <input id="email" type="email" placeholder="Seu email" name="email" class="form-control input-sm required email" v-model="user.email" required>
+                                    <input id="email" type="email" placeholder="Seu email" name="email" class="form-control input-md required email" v-model="user.email" required>
                                 </div><!-- end form-group -->
                                 <div class="form-group">
                                     <label for="cpfCnpj">CPF/CNPJ<span class="text-danger">*</span></label>
-                                    <input id="cpfCnpj" type="text" placeholder="CPF/CNPJ" id="cpfCnpj" name="cpfCnpj" class="form-control input-sm required" v-model="user.cpfCnpj" required>
+                                    <input id="cpfCnpj" type="text" placeholder="CPF/CNPJ" id="cpfCnpj" name="cpfCnpj" class="form-control input-md required" v-model="user.cpfCnpj" required v-on:blur="checkCpfCnpj()">
                                 </div><!-- end form-group -->
                                 <div class="form-group">
                                     <label for="birthday">Data de Nascimento</label>
-                                    <input id="birthday" type="text" placeholder="Data de Nascimento" name="birthday" class="form-control input-sm required" v-model="user.birthdayFormatted">
+                                    <input id="birthday" type="text" placeholder="Data de Nascimento" name="birthday" class="form-control input-md required" v-model="user.birthdayFormatted">
                                 </div><!-- end form-group -->
                                 <div class="form-group">
                                     <label for="telephone">Telefone</label>
-                                    <input id="telephone" type="text" placeholder="Seu Telefone" name="telephone" class="form-control input-sm required" v-model="user.telephone">
+                                    <input id="telephone" type="text" placeholder="Seu Telefone" name="telephone" class="form-control input-md required" v-model="user.telephone">
                                 </div><!-- end form-group -->
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-default round btn-md"><i class="fa fa-save mr-5"></i> Salvar</button>
+                                    <button type="submit" class="btn btn-default round btn-md" :disabled="!isValidCpfCnpj"><i class="fa fa-save mr-5"></i> Salvar</button>
                                 </div><!-- end form-group -->
-                            </div><!-- end col -->
-                        </div><!-- end row -->
-                    </form>
+                            </form>
+                        </div><!-- end col -->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12 text-left">
+                                    <h6 class="title">Alterar Senha</h6>
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+                            <hr class="spacer-5"><hr class="spacer-10 no-border">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form v-on:submit='savePassword()'>
+                                        <div class="form-group">
+                                            <label for="password">Sua senha</label>
+                                            <input type="password" class="form-control input-md" id="password" name="password" placeholder="Senha" required v-model="password">
+                                        </div><!-- end form-group -->
+                                        <div class="form-group">
+                                            <label for="cmfPassword">Confirme sua senha</label>
+                                            <input type="password" class="form-control input-md" id="cmfPassword" name="cmfPassword" placeholder="Confirme sua senha" required v-model="cmfPassword" v-on:blur="confirmPassword()">
+                                        </div><!-- end form-group -->
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-default round btn-md" :disabled="!isValidPassword"><i class="fa fa-save mr-5"></i> Salvar</button>
+                                        </div><!-- end form-group -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end row -->
                 </div>
             </div><!-- end row -->
         </div><!-- end container -->
@@ -71,6 +96,7 @@
 <#include "/footer.html" />
 <script type="text/javascript" src="/js/pages/myinfo.js"></script>
 <script type="text/javascript" src="/js/plugins/mask/input.mask.js"></script>
+<script type="text/javascript" src="/js/plugins/validation/validation.cpfCnpj.js"></script>
 <script type="text/javascript">
     $("input[id*='cpfCnpj']").inputmask({
         mask: ['999.999.999-99', '99.999.999/9999-99'],

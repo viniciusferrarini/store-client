@@ -19,7 +19,7 @@ var login = new Vue({
             var self = this;
             self.user.cpfCnpj = $('#cpfCnpj').val();
             util.httpPostJson("/register/newUser", self.user).then(function (data) {
-                location.pathname = "/buy";
+                toastr.success("Seu cadastro foi realizado com sucesso!", "Sucesso");
             }, function (error) {
                 toastr.error(error.responseJSON.message, "Erro!");
             });
