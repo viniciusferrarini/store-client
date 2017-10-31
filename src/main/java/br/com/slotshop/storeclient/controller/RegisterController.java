@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/register")
@@ -24,6 +25,7 @@ public class RegisterController {
     public @ResponseBody Object getRegister(@Valid @RequestBody User user) {
         if(userService.findByEmail(user.getEmail()) == null) {
             user.setRole("CLIENT");
+            user.setRegisterDate(new Date());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userService.save(user);
         }
