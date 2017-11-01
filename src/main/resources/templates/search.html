@@ -39,19 +39,19 @@
                                                 <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
                                             </div>
                                             <figure class="layer">
-                                                <a href="/product/${item.id}/${item.name}">
+                                                <a href="/product/${item.id}/${item.nameForLink}" alt="${item.name}">
                                                     <img src="http://130.211.158.13:7990/gallery/picture/${item.firstPictureFromGallery}" alt="${item.name}">
                                                 </a>
                                             </figure>
                                             <div class="icons">
-                                                <a class="icon semi-circle" href="/product/${item.id}/${item.name}"><i class="fa fa-search"></i></a>
+                                                <a class="icon semi-circle" href="/product/${item.id}/${item.nameForLink}"><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="caption">
-                                            <h6 class="regular"><a href="/product/${item.id}/${item.name}">${item.name}</a></h6>
+                                            <h6 class="regular"><a href="/product/${item.id}/${item.nameForLink}" alt="${item.name}">${item.name}</a></h6>
                                             <div class="price">
                                                 <small class="amount off"></small>
-                                                <a href="/product/${item.id}/${item.name}"><span class="amount text-primary">${item.valueFormatted}</span></a>
+                                                <a href="/product/${item.id}/${item.nameForLink}" alt="${item.name}"><span class="amount text-primary">${item.valueFormatted}</span></a>
                                             </div>
                                             <a href="javascript:void(0);"><i class="fa fa-cart-plus mr-5"></i>Carrinho</a>
                                         </div><!-- end caption -->
