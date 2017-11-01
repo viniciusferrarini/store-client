@@ -39,16 +39,16 @@
                                                 <span class="product-badge top right danger-background text-white semi-circle">-20%</span>
                                             </div>
                                             <figure class="layer">
-                                                <a href="/product/${product.id}/${product.name}">
+                                                <a href="/product/${product.id}/${product.nameForLink}" alt="${item.name}">
                                                     <img src="http://130.211.158.13:7990/gallery/picture/${product.firstPictureFromGallery}" alt="${product.name}">
                                                 </a>
                                             </figure>
                                             <div class="icons">
-                                                <a class="icon semi-circle" href="/product/${product.id}/${product.name}"><i class="fa fa-search"></i></a>
+                                                <a class="icon semi-circle" href="/product/${product.id}/${product.nameForLink}" alt="${item.name}"><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="caption">
-                                            <h6 class="regular"><a href="/product/${product.id}/${product.name}">${product.name}</a></h6>
+                                            <h6 class="regular"><a href="/product/${product.id}/${product.nameForLink}" alt="${item.name}">${product.name}</a></h6>
                                             <#if product.amount <= 0>
                                                 <div class="text-center" style="margin-top: 10px;">
                                                     <button class="btn btn-danger semi-circle btn-sm">
@@ -58,7 +58,7 @@
                                                 <#else>
                                                     <div class="price">
                                                         <small class="amount off"></small>
-                                                        <a href="/product/${product.id}/${product.name}">
+                                                        <a href="/product/${product.id}/${product.nameForLink}" alt="${item.name}">
                                                             <h5 class="text-primary text-center">${product.valueWithDiscountFormatted} à vista ou</h5><h6 class="text-danger text-xs text-center"> 12x de ${product.valueParcelFormatted} no cartão de crédito.</h6>
                                                         </a>
                                                     </div>
