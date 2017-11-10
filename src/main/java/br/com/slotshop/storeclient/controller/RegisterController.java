@@ -24,7 +24,6 @@ public class RegisterController {
     @PostMapping("/newUser")
     public @ResponseBody Object getRegister(@Valid @RequestBody User user) {
         if(userService.findByEmail(user.getEmail()) == null) {
-            user.setRole("CLIENT");
             user.setRegisterDate(new Date());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userService.save(user);
